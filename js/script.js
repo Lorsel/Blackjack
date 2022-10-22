@@ -7,7 +7,7 @@ var doc = document.getElementById("test");
 for(var i=0;i<4;i++){
     for(var j=0;j<13;j++){
         ico[i][j] = "ico/" + i + "/" + (j+1) + ".jpg";
-        doc.innerHTML += "<img id='" + i + "_" + j + "' src='ico/" + i + "/" + j + ".png'> </br>"
+        doc.innerHTML += "<img id='" + i + "_" + j + "' src='ico/" + i + "/" + j + ".png'>"
     }
 }
 
