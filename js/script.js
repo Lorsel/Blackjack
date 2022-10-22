@@ -9,10 +9,10 @@ for(var i=0;i<4;i++){
 }
 
 var doc = document.getElementById("test");
-doc.innerHTML += "<img src='ico/fish_1.png'> </br>";
-doc.innerHTML += "<img src='ico/fish_5.png'> </br>";
-doc.innerHTML += "<img src='ico/fish_20.png'> </br>";
-doc.innerHTML += "<img src='ico/fish_25.png'> </br>";
-doc.innerHTML += "<img src='ico/fish_100.png'> </br>";
-doc.innerHTML += "<img src='ico/fish_500.png'> </br>";
-doc.innerHTML += "<img src='ico/icona.png'> </br>";
+doc.innerHTML += "<img src='ico/fish/fish_1.png'> </br>";
+doc.innerHTML += "<img src='ico/fish/fish_5.png'> </br>";
+doc.innerHTML += "<img src='ico/fish/fish_20.png'> </br>";
+doc.innerHTML += "<img src='ico/fish/fish_25.png'> </br>";
+doc.innerHTML += "<img src='ico/fish/fish_100.png'> </br>";
+doc.innerHTML += "<img src='ico/fish/fish_500.png'> </br>";
+doc.innerHTML += "<img src='ico/fish/icona.png'> </br>";
