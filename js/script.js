@@ -11,7 +11,8 @@ for(var i=0;i<4;i++){
     }
 }
 
-doc.innerHTML += "</br> <img id='f1' src='ico/fish/fish_1.png'> </br>";
+doc.innerHTML += "</br>"
+doc.innerHTML += "<img id='f1' src='ico/fish/fish_1.png'> </br>";
 doc.innerHTML += "<img id='f5' src='ico/fish/fish_5.png'> </br>";
 doc.innerHTML += "<img id='f20' src='ico/fish/fish_20.png'> </br>";
 doc.innerHTML += "<img id='f25' src='ico/fish/fish_25.png'> </br>";
