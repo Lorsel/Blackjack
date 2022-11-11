@@ -1,3 +1,36 @@
 h1{
+    font-size: 30px; 
+    font-family: Arial;
     color: red;
+    text-align: center;
 }
+
+.img{
+    width: 15px;
+    height: 15px;
+}
+
+body{
+    background-attachment: fixed;
+    background-size: cover;
+    display: block;
+}
+
+.tasto{
+    background-repeat: no-repeat;
+    height: 85px;
+    width: 75px;
+    position: fixed;
+    top:5px;
+    right: 5px;
+}
+
+.nomi{
+    bottom: 3px;
+    right: 3px;
+    font-size: 10px;
+    font-family: 'Times New Roman';
+    color:yellow;
+    position:fixed;
+}
+
