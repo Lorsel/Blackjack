@@ -11,10 +11,11 @@
   <!--<div id="test" class="img"></div>-->
 
   <form>
-    <input type="image" class="tasto" src="ico/puls/logout-button_1356303.jpg" onclick="chiudi()" value="chiudi"/>
-    <select onchange="location = this.change">
-      <option>-- Seleziona --</option>
-      <option value="index/card_list.html">Carte</option>
+    <select onchange="menu(this);" class="tasto">
+      <option value="null">.</option>
+      <option value="rules">Regole di Gioco</option>
+      <option value="card_list">Carte</option>
+      <option value="close">Logout</option>
     </select>
   </form>
 
@@ -23,8 +24,3 @@
   <script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
-<!--
-tven068 isarva
-
-gara.squadre.oliinfo.it
--->

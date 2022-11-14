@@ -19,8 +19,15 @@ doc.innerHTML += "<img id='f100' src='ico/fish/fish_100.png'> </br>";
 doc.innerHTML += "<img id='f500' src='ico/fish/fish_500.png'> </br>";
 doc.innerHTML += "<img id='logo' src='ico/icona.png'> </br>";
 
-function chiudi(){
-    alert("EH VOLEVI, GUARDA CHE FACCIA NON SE LO ASPETTAVA!!")
-    window.top.close();
+function menu(page){
+    if(page.value == "null") {
+        return -1;
+    }
+    else if(page.value == "close"){
+        alert("EH VOLEVI, GUARDA CHE FACCIA NON SE LO ASPETTAVA!!")
+        window.top.close();
+    }
+    else {
+        window.location = "./index/" + page.value + ".html";
+    }
 }
-

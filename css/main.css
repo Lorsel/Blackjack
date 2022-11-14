@@ -18,8 +18,8 @@ body{
 
 .tasto{
     background-repeat: no-repeat;
-    height: 85px;
-    width: 75px;
+    height: 10px;
+    width: 20px;
     position: fixed;
     top:5px;
     right: 5px;
