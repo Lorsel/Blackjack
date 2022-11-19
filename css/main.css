@@ -1,4 +1,4 @@
-h1{
+.titolo{
     font-size: 30px; 
     font-family: Arial;
     color: red;
@@ -11,8 +11,10 @@ h1{
 }
 
 body{
+    background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    background-position: top;
     display: block;
 }
 
@@ -21,7 +23,7 @@ body{
     height: 10px;
     width: 20px;
     position: fixed;
-    top:5px;
+    top: 5px;
     right: 5px;
 }
 
@@ -34,3 +36,78 @@ body{
     position:fixed;
 }
 
+#but{
+    text-align: center;
+    color: lime;
+    font-size: 25px;
+}
+
+input#gameon{
+    transition-duration: 400ms;
+    background-color: dimgray;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    position: relative;
+    left: -5px;
+    /*top: 55%;
+    left: 48.3%;*/
+}
+
+input#gameon:hover {
+    background-color: darkcyan;
+    border: none;
+    border-radius: 12px;
+}
+
+#debug{
+    position: fixed;
+    bottom: 20px;
+    left: 5px;
+}
+
+.fish{
+    height: 45px;
+}
+
+#fish_display{
+    position: fixed;
+    bottom: 20px;
+    right: 5px;
+}
+
+td{
+    padding: 5px;
+    text-align: center;
+}
+
+.actionPos{
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+}
+
+.action{
+    transition-duration: 500ms;
+    background-color: dimgray;
+    border: none;
+    border-radius: 20px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.action:hover{
+    font-size: 17px;
+    color: antiquewhite;
+}
+
+.volume{
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    color: white;
+}
+
+.menu{
+    text-align: center;
+}
