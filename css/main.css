@@ -104,7 +104,7 @@ body{
     font-size: 25px;
 }
 
-input#gameon{
+.gameon{
     transition-duration: 400ms;
     background-color: dimgray;
     border: none;
@@ -116,7 +116,7 @@ input#gameon{
     left: 48.3%;*/
 }
 
-input#gameon:hover {
+.gameon:hover {
     background-color: darkcyan;
     border: none;
     border-radius: 12px;
