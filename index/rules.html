@@ -8,16 +8,52 @@
             width: 1px;
             border: 1px solid white;
         }
-        h3{
+        
+        .int{
+            color: red;
             text-align: center;
+        }
+
+        .tit{
+            text-align: center;
+            color:darkorchid;
+        }
+
+        .puls{
+            top: 50px;
+            right:10px;
+            position: fixed;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <h1 style="color: red;">Regolamento BlackJack</h1>
+    <h1 class="int">Regolamento BlackJack</h1>
+    <form>
     <input type="button" id="estegg" onclick="window.location = 'easteregg.html'"> <br/>
-    <input type="button" value="Home" onclick="window.location = '../index.html'">
-    <h3>Non devi superare un punteggio di 21</h3>
-    <h3>Il Dealer deve fare almeno 18 per vincere</h3>
+    <input type="button" value="Home" onclick="window.location = '../index.html'"  class="puls">
+    </form>
+
+    <!--21 film per BlackJack-->
+    <h3 class="tit">SVOLGIMENTO</h3>
+    <h3 style="text-align: center;">Il gioco si svolge tra il mazziere(Croupier) e un numero di giocatori(massimo 7)</h3>
+    <h3 style="text-align: center;">Vince qualunque giocatore che arrivi a ventuno o si avvicini a esso senza superarlo, chi lo supera perde.</h3>
+    <h3 style="text-align: center;">Se subito dopo il prima e seconda mano data dal mazziere nessuno supera o si avvicina a 21, o il mazziere non ha superato il 17.</h3>
+    <h3 style="text-align: center;">Il giocatore può chiedere una delle seguenti mosse: HIT, STAND, SPLIT, DOUBLE-DOWN e SURRENDER(insurance)</h3>
+    <h3  class="tit">HIT</h3>
+    <h3 style="text-align: center;">Lo HIT consiste nella richiesta da parte del giocatore di una carta aggiuntiva.</h3>
+    <h3 style="text-align: center;">(si può richiedere quante volte si vuole dopo le prime due mani)</h3>
+    <h3  class="tit">STAND</h3>
+    <h3 style="text-align: center;">Lo STAND(rimani) permette al giocatore di rimanere solo con le due carte iniziali</h3>
+    <h3 style="text-align: center;">(si può richiedere quante volte si vuole dopo le prime due mani)</h3>
+    <h3  class="tit">SPLIT</h3>
+    <h3 style="text-align: center;">si può attuare solo nel caso di due carte di genere e numero uguale, le separa, creando due mazzi differenti per il giocatore</h3>
+    <h3  class="tit">DOUBLE-DOWN</h3>
+    <h3 style="text-align: center;">Il giocatore raddoppia la puntata iniziale, impegnando si però a richiedere una sola carta in cambio</h3>
+    <h3 style="text-align: center;">Non si può utilizzare dopo l'HIT</h3>
+    <h3  class="tit">SURRENDER o Insurance</h3>
+    <h3 style="text-align: center;">si va a pagare in caso di perdita la metà di ciò che si ha puntato, il resto ritorna al giocatore</h3>
+    <h3 style="text-align: center;">(si può richiedere una sola volta a partita)</h3>
+
 </body>
 </html>

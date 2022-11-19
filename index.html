@@ -4,15 +4,17 @@
   <title>BlackJack</title>
   <link rel="stylesheet" href="css/main.css">
 </head>
-<body style="background-image: url('ico/sfondo/sfondo.jpg');">
+<body style="background-image: url('ico/sfondo/icona.png');">
   <h1 class="titolo">BlackJack</h1>
+
 
   <div id="test" class="img"></div>
 
   <form id="but">
-    <input type="button" id="gameon" value="Gioca" onclick="endGame(7)">
+    <input type="button" name="rand" id="partita" value="gioca" onclick="gioca()" class="centra"/>
   </form>
 
+  
   <form>
     <select onchange="menu(this)" class="tasto">
       <option class="menu" value="null">--------- MENU --------</option>
@@ -76,6 +78,10 @@
       </tr>
     </table>
   </form>
+
+  <div id="rand"></div>
+  <div id="giocatori" class="font"></div>
+  <div id="retro" class="retro"></div>
 
   <p class="nomi">Buosi | Stella | Candoni</p>
   <audio id="audio" src="soundtrack/casino.m4a"></audio>

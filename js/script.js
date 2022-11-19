@@ -1,4 +1,5 @@
 // C = 0 | Q = 1 | F = 2 | P = 3
+//TODO settare dimensioni immagini
 const mat = [["C",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["Q",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["F",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["P",[1,2,3,4,5,6,7,8,9,10,11,12,13]]];
 var ico = [[],[],[],[]];
 
@@ -27,6 +28,12 @@ var button = document.getElementById("gameon");
 var audio = document.getElementById("audio");
 var fish_value = document.getElementsByClassName("fish_value");
 var but = document.getElementById("but");
+
+var rand = document.getElementById("rand");
+var puls = document.getElementById("partita");
+var retro = document.getElementById("retro");
+var num =0; 
+var i=0;
 
 /* UTILITY */
 function debPrint() {
@@ -124,7 +131,57 @@ function changeName(playerID){
 }
 
 /* GAME */
-function fishValue(playerID){
+function gioca(){
+if(i==0){
+    var number=0;
+  while(number<=0 || number>7){
+    number = prompt("inserisci il numero di giocatori");
+  }
+  puls.style.display="none";
+  num = number;
+}else if(i<=num){
+    var g=0, n=0;
+    g = Math.floor(Math.random() * 4);
+    n = Math.floor(Math.random() * 12);
+    retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+g+"/"+n+".jpg'>";
+}
+    i++;
+    setTimeout(gioca, 1000);
+}
+
+
+function double_down(){
+    /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
+}
+
+function insurance(){
+    /*salva metà della puntata di un giocatore in caso di giocata perdente*/
+}
+
+function split(){
+    /*divide le carte del giocatore con tre possibilità
+        -separa due carte e ne aggiunge una uguale alla seconda delle 2;
+        -conta le due carte iniziali del giocatore come una carta sola;
+        -aggiunge una carta a ciascuna altra carta separata;
+    */
+}
+
+//per creare degli stalli di tempo per tra un turno e l'altro
+/*function demo () {
+    // (A) DO SOMETHING
+    rand.innerHTML += "<p> ciao </p>";
+   
+    // (B) RUN THIS AFTER 1 SECOND
+    setTimeout(demoA, 10000);
+   
+    // (C) NOTE - SETTIMEOUT() IS ASYNC
+    // THIS WILL CONTINUE TO RUN!
+    console.log("Third");
+  }
+  
+  function demoA () { rand.innerHTML += "<p> mondo </p>"; }*/
+
+  function fishValue(playerID){
     let value = dataBase[playerID].fish;
     let fi = [500,100,25,20,5,1];
     let t = 0;
