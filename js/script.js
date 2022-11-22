@@ -2,7 +2,8 @@
 //TODO settare dimensioni immagini
 const mat = [["C",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["Q",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["F",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["P",[1,2,3,4,5,6,7,8,9,10,11,12,13]]];
 var ico = [[],[],[],[]];
-
+//fantastico incredibile strabiliante database che tiene il conteggio di tutto(indica palesemente che abbiamo il cazzo enorme)
+//chi smentisce è proprio come Roman
 let dataBase = [
     {},
     {},
