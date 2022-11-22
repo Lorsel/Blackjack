@@ -1,0 +1,32 @@
+#back_card{
+    height: 60px;
+    width: 43.61px;
+}
+
+.cella_mazz_1{
+    position: fixed;
+    height: 60px;
+    left: 47%;
+    top: 15%;
+}
+
+.cella_mazz_2{
+    position: fixed;
+    height: 60px;
+    left: 50%;
+    top: 15%;
+}
+
+.cella_mazz_3{
+    position: fixed;
+    height: 60px;
+    left: 47%;
+    top: 23%;
+}
+
+.cella_mazz_4{
+    position: fixed;
+    height: 60px;
+    left: 50%;
+    top: 23%;
+}

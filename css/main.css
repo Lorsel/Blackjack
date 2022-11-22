@@ -43,55 +43,6 @@ body{
     position:fixed;
 }
 
-.cella_1{
-    height: 60px;
-    top: 20%;
-    left: 20.4%;
-    position: fixed;
-}
-
-.cella_2{
-    height: 60px;
-    top: 43.3%;
-    left: 25.8%;
-    position: fixed;
-}
-
-.cella_3{
-    height: 60px;
-    top: 59.5%;
-    left: 35.7%;
-    position: fixed;
-}
-
-.cella_4{
-    height: 60px;
-    top: 65.4%;
-    left: 48.6%;
-    position: fixed;
-}
-
-.cella_5{
-    height: 60px;
-    top:  59.5%;
-    right: 36%;
-    position: fixed;
-}
-
-.cella_6{
-    height: 60px;
-    top: 43.3%;
-    right: 25.9%;
-    position: fixed;
-}
-
-.cella_7{
-    height: 60px;
-    top: 19.9%;
-    right: 20.7%;
-    position: fixed;
-}
-
 .centra{
     top: 50%;
     right:48.6%;

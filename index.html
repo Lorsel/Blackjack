@@ -3,6 +3,8 @@
 <head>
   <title>BlackJack</title>
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/pos_carte_giocatori.css">
+  <link rel="stylesheet" href="css/pos_carte_mazziere.css">
 </head>
 <body style="background-image: url('ico/sfondo/icona.png');">
   <h1 class="titolo">BlackJack</h1>
@@ -35,6 +37,7 @@
 
       <option class="menu" value="print">Printa Tutto</option>
       <option class="menu" value="bug">Debug</option>
+      <option class="menu" value="cards">Posiziona Carte</option>
       <option class="menu" value="fish">Fish</option>
       <option class="menu" value="comp">Compilazione</option>
     </select>
@@ -43,9 +46,10 @@
   <div id="debug"></div>
 
   <form class="actionPos">
-    <input type="button" class="action" style="background-color: green" value="Call">
+    <input type="button" class="action" style="background-color: green" value="Hit">
     <input type="button" class="action" style="background-color: green" value="Split">
     <input type="button" class="action" style="background-color: green" value="Doble Down">
+    <input type="button" class="action" style="background-color: darkgoldenrod" value="Stand">
     <input type="button" class="action" style="background-color: darkgoldenrod" value="Insurance">
     <input type="button" class="action" style="background-color: red" value="Fold">
   </form>

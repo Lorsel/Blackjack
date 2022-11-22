@@ -87,6 +87,15 @@ function menu(page){
         //debug.innerHTML += "<p style='color: white;'>Button Left: " + button.style.left + "px</p>"
         console.log(dataBase);
     }
+    else if(page.value == "cards"){
+        for(var j=1;j<=7;j++){
+            retro.innerHTML += "<img class='cella_"+j+"' src='ico/0/0.jpg'>";
+        }
+        retro.innerHTML += "<img class='cella_mazz_1' src='ico/0/0.jpg'>";
+        retro.innerHTML += "<img class='cella_mazz_2' id='back_card' src='ico/Card_Original/retro_carte.png'>";
+        retro.innerHTML += "<img class='cella_mazz_3' id='back_card' src='ico/Card_Original/retro_carte.png'>";
+        retro.innerHTML += "<img class='cella_mazz_4' id='back_card' src='ico/Card_Original/retro_carte.png'>";
+    }
     else if(page.value == "fish"){
         fishValue(whoPlaying);
     }
@@ -156,9 +165,7 @@ function gioca(){
         setTimeout(gioca, 1000);
     }
     else if(i>num){
-        if(num<8){
-            i = 8;
-        }
+        i = 8;
         curpi++;
         var g=0, n=0;
         g = Math.floor(Math.random() * 4);
