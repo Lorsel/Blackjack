@@ -11,16 +11,21 @@ let dataBase = [
     {},
     {},
     {},
+    {},
     {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, fish: 772}
 ];
 let playerN = null;
 let isAlive = null;
-let whoPlaying = 7;
+let whoPlaying = 8;
 let firstAce = true;
 
 const def_heigth = 667;
 const def_width = 1366;
 let isPlaying = false;
+
+let num = 0;
+let i = 0;
+let curpi = 0;
 
 var doc = document.getElementById("test");
 var debug = document.getElementById("debug");
@@ -32,8 +37,6 @@ var but = document.getElementById("but");
 var rand = document.getElementById("rand");
 var puls = document.getElementById("partita");
 var retro = document.getElementById("retro");
-var num =0; 
-var i=0;
 
 /* UTILITY */
 function debPrint() {
@@ -82,6 +85,7 @@ function menu(page){
         debug.innerHTML += "<p style='color: white;'>Page Width: " + window.innerWidth +" px</p>";
         //debug.innerHTML += "<p style='color: white;'>Button Top: " + button.style.top + "px</p>"
         //debug.innerHTML += "<p style='color: white;'>Button Left: " + button.style.left + "px</p>"
+        console.log(dataBase);
     }
     else if(page.value == "fish"){
         fishValue(whoPlaying);
@@ -132,21 +136,39 @@ function changeName(playerID){
 
 /* GAME */
 function gioca(){
-if(i==0){
-    var number=0;
-  while(number<=0 || number>7){
-    number = prompt("inserisci il numero di giocatori");
-  }
-  puls.style.display="none";
-  num = number;
-}else if(i<=num){
-    var g=0, n=0;
-    g = Math.floor(Math.random() * 4);
-    n = Math.floor(Math.random() * 12);
-    retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+g+"/"+n+".jpg'>";
-}
+    if(i==0){
+        comp(true);
+        var number=0;
+        while(number<=0 || number>7){
+            number = prompt("inserisci il numero di giocatori");
+        }
+        puls.style.display="none";
+        num = number;
+        setTimeout(gioca, 1000);
+    }
+    else if(i<=num){
+        var g=0, n=0;
+        g = Math.floor(Math.random() * 4);
+        n = Math.floor(Math.random() * 12);
+        retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+g+"/"+n+".jpg'>";
+        let cardID = "" + g + "/" + n;
+        cardAssign(i-1, cardID, n);
+        setTimeout(gioca, 1000);
+    }
+    else if(i>num){
+        if(num<8){
+            i = 8;
+        }
+        curpi++;
+        var g=0, n=0;
+        g = Math.floor(Math.random() * 4);
+        n = Math.floor(Math.random() * 12);
+        retro.innerHTML += "<img class=\"cella_mazz_"+curpi+"\" src='ico/"+g+"/"+n+".jpg'>";
+        let cardID = "" + g + "/" + n;
+        cardAssign(i-1, cardID, n);
+        setTimeout(gioca, 1000);
+    }
     i++;
-    setTimeout(gioca, 1000);
 }
 
 
@@ -170,15 +192,15 @@ function split(){
 /*function demo () {
     // (A) DO SOMETHING
     rand.innerHTML += "<p> ciao </p>";
-   
+
     // (B) RUN THIS AFTER 1 SECOND
     setTimeout(demoA, 10000);
-   
+
     // (C) NOTE - SETTIMEOUT() IS ASYNC
     // THIS WILL CONTINUE TO RUN!
     console.log("Third");
   }
-  
+
   function demoA () { rand.innerHTML += "<p> mondo </p>"; }*/
 
   function fishValue(playerID){
@@ -208,9 +230,8 @@ function comp(flag){
         dataBase[i].insurance = 0;
         dataBase[i].splitted = false;
         dataBase[i].lost = false;
-        dataBase[i].fish = 0;
+        dataBase[i].fish = 500;
     }
-    console.log(dataBase);
 }
 
 function reset(){
@@ -222,7 +243,7 @@ function reset(){
     but.innerHTML = "";
 }
 
-function cardAssign(playerID, card_id){
+function cardAssign(playerID, card_id, card_val){
     var i=0;
     var flag = true;
     while(dataBase[playerID].card[i] != null){
@@ -234,8 +255,8 @@ function cardAssign(playerID, card_id){
     }
     if(flag){
         dataBase[playerID].card[i] = card_id;
-        dataBase[playerID].card_value[i] = cardValue(parseInt(card_id));
-        dataBase[playerID].card_sum = dataBase[playerID].card_sum + cardValue(parseInt(card_id));
+        dataBase[playerID].card_value[i] = cardValue(parseInt(card_val));
+        dataBase[playerID].card_sum = dataBase[playerID].card_sum + cardValue(parseInt(card_val));
     }
     else{
         alert("Limite Numero di Carte Raggiunto");
@@ -246,18 +267,22 @@ function cardAssign(playerID, card_id){
 }
 
 function cardValue(card){
-    if(card>0 && card<=10){
-        if(card == 1 && firstAce == true){
+    if(card>0 && card<=9){
+        if(card == 0 && firstAce == true){
             firstAce = false;
-            return 11;
+            console.log(card+" Dio Negro 1");
+            return 11*1;
         }
         else{
-            return card;
+            console.log(card+" Dio Negro 2");
+            return (card+1)*1;
         }
     }
-    else if(card>10 && card<=13){
-        return 10;
+    else if(card>9 && card<=13){
+        console.log(card+" Dio Negro 3");
+        return 10*1;
     }
+
 }
 
 function nextPlayer(){

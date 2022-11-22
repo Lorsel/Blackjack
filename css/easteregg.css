@@ -1,0 +1,9 @@
+.but{
+    position: relative;
+}
+
+.but:hover{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
