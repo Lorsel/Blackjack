@@ -1,48 +1,196 @@
 .cella_1{
     height: 60px;
-    top: 20%;
+    top: 18.4%;
     left: 20.5%;
     position: fixed;
 }
 
 .cella_2{
     height: 60px;
-    top: 43.5%;
+    top: 39.5%;
     left: 25.8%;
     position: fixed;
 }
 
 .cella_3{
     height: 60px;
-    top: 59.5%;
+    top: 54.5%;
     left: 35.9%;
     position: fixed;
 }
 
 .cella_4{
     height: 60px;
-    top: 65.5%;
+    top: 59.7%;
     left: 48.7%;
     position: fixed;
 }
 
 .cella_5{
     height: 60px;
-    top:  59.5%;
+    top:  54.5%;
     right: 35.8%;
     position: fixed;
 }
 
 .cella_6{
     height: 60px;
-    top: 43.5%;
+    top:  39.5%;
     right: 25.8%;
     position: fixed;
 }
 
 .cella_7{
     height: 60px;
-    top: 20%;
+    top: 18.4%;
     right: 20.6%;
     position: fixed;
 }
+
+.cella_8{
+    height: 60px;
+    top: 20.4%;
+    left: 14.5%;
+    position: fixed;
+}
+
+.cella_9{
+    height: 60px;
+    top: 46.1%;
+    left: 21%;
+    position: fixed;
+}
+
+.cella_10{
+    height: 60px;
+    bottom: 28.9%;
+    left: 33.2%;
+    position: fixed;
+}
+
+.cella_11{
+    height: 60px;
+    bottom: 22.8%;
+    right: 48.5%;
+    position: fixed;
+}
+
+.cella_12{
+    height: 60px;
+    bottom: 28.9%;
+    right: 33.2%;
+    position: fixed;
+}
+
+.cella_13{
+    height: 60px;
+    top: 46.1%;
+    right: 21%;
+    position: fixed;
+}
+
+.cella_14{
+    height: 60px;
+    top: 20.4%;
+    right: 14.7%;
+    position: fixed;
+}
+
+.cella_15{
+    height: 60px;
+    top: 22.4%;
+    left: 8.8%;
+    position: fixed;
+}
+
+.cella_16{
+    height: 60px;
+    top: 52.4%;
+    left: 16.3%;
+    position: fixed;
+}
+
+.cella_17{
+    height: 60px;
+    bottom: 19.4%;
+    left: 30.4%;
+    position: fixed;
+}
+
+.cella_18{
+    height: 60px;
+    bottom: 12.2%;
+    right: 48.5%;
+    position: fixed;
+}
+
+.cella_19{
+    height: 60px;
+    bottom: 19.4%;
+    right: 30.4%;
+    position: fixed;
+}
+
+.cella_20{
+    height: 60px;
+    top: 52.4%;
+    right: 16.3%;
+    position: fixed;
+}
+
+.cella_21{
+    height: 60px;
+    top: 22.4%;
+    right: 8.88%;
+    position: fixed;
+}
+
+.cella_22{
+    height: 60px;
+    top: 24.4%;
+    left: 4%;
+    position: fixed;
+}
+
+.cella_23{
+    height: 60px;
+    top: 59%;
+    left: 12.5%;
+    position: fixed;
+}
+
+.cella_24{
+    height: 60px;
+    bottom: 10%;
+    left: 27.6%;
+    position: fixed;
+}
+
+.cella_25{
+    height: 60px;
+    bottom: 4%;
+    right: 48.5%;
+    position: fixed;
+}
+
+.cella_26{
+    height: 60px;
+    bottom: 10%;
+    right: 27.6%;
+    position: fixed;
+}
+
+.cella_27{
+    height: 60px;
+    top: 59%;
+    right: 12.5%;
+    position: fixed;
+}   
+
+.cella_28{
+    height: 60px;
+    top: 24.4%;
+    right: 4%;
+    position: fixed;
+}
+

@@ -88,7 +88,7 @@ function menu(page){
         console.log(dataBase);
     }
     else if(page.value == "cards"){
-        for(var j=1;j<=7;j++){
+        for(var j=1;j<=28;j++){
             retro.innerHTML += "<img class='cella_"+j+"' src='ico/0/0.jpg'>";
         }
         retro.innerHTML += "<img class='cella_mazz_1' src='ico/0/0.jpg'>";
