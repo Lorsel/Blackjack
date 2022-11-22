@@ -57,7 +57,7 @@ function debPrint() {
     doc.innerHTML += "<img id='logo' src='ico/icona.png'> </br>";
 }
 
-
+//pulsante a tendina
 function menu(page){
     if(page.value == "null" || page.value == "null2" || page.value == "null3" || page.value == "null4"){
         page.value = "null";
@@ -107,7 +107,7 @@ function menu(page){
     }
     page.value = "null";
 }
-
+//traccia musicale attacca-stacca
 function musica(){
     if(isPlaying == false) {
         audio.play();
@@ -120,7 +120,7 @@ function musica(){
         isPlaying = false;
     }
 }
-
+//volume traccia
 function volume(vol){
     if(vol == -1){
         doc.innerHTML = null;
@@ -131,7 +131,7 @@ function volume(vol){
         divvo.innerHTML = ""+vol;
     }
 }
-
+//cambiamento nome per il giocatore
 function changeName(playerID){
     if(whoPlaying == null){
         alert("ATTENZIONE prima bisogna avviare una partita per cambiare il proprio nome");
@@ -210,7 +210,8 @@ function split(){
 
   function demoA () { rand.innerHTML += "<p> mondo </p>"; }*/
 
-  function fishValue(playerID){
+//fish relative a un giocatore
+function fishValue(playerID){
     let value = dataBase[playerID].fish;
     let fi = [500,100,25,20,5,1];
     let t = 0;
