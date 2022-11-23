@@ -340,11 +340,11 @@ function nextPlayer(){
     else{
         whoPlaying++;
     }
-    while(dataBase[whoPlaying].lost){
-        whoPlaying++;
-    }
     if(isAlive <= 0){
         endGame();
+    }
+    while(dataBase[whoPlaying].lost){
+        whoPlaying++;
     }
     fishValue(whoPlaying);
 }
