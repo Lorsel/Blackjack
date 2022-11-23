@@ -2,6 +2,7 @@
 <html leng="it">
 <head>
   <title>BlackJack</title>
+  <!--link ai fogli di stile-->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/pos_carte_giocatori.css">
   <link rel="stylesheet" href="css/pos_carte_mazziere.css">
@@ -16,7 +17,7 @@
     <input type="button" name="rand" id="partita" value="Gioca" onclick="gioca()" class="gameon"/>
   </form>
 
-  
+  <!--menu a tendina-->
   <form>
     <select onchange="menu(this)" class="tasto">
       <option class="menu" value="null">--------- MENU --------</option>
@@ -44,7 +45,7 @@
   </form>
 
   <div id="debug"></div>
-
+  <!--pulsanti dei giocatori-->
   <form class="actionPos">
     <input type="button" class="action" style="background-color: green" value="Hit" onclick="hit()">
     <input type="button" class="action" style="background-color: green" value="Split">
@@ -53,7 +54,7 @@
     <input type="button" class="action" style="background-color: darkgoldenrod" value="Insurance">
     <input type="button" class="action" style="background-color: red" value="Fold">
   </form>
-
+  <!--table con annesso count delle fish del giocatore-->
   <form id="fish_display">
     <table>
       <tr>
@@ -82,13 +83,15 @@
       </tr>
     </table>
   </form>
-
+  <!--vari div di prova per il gioco-->
   <div id="rand"></div>
   <div id="giocatori" class="font"></div>
   <div id="retro" class="retro"></div>
-
+  <!--creatori del gioco-->
   <p class="nomi">Buosi | Stella | Candoni</p>
+  <!--traccia audio-->
   <audio id="audio" src="soundtrack/casino.m4a"></audio>
+  <!--link ai file di script-->
   <script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
