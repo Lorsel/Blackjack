@@ -1,10 +1,11 @@
+/*css del titolo*/
 h1{
     font-size: 30px; 
     font-family: Arial;
     color: red;
     text-align: center;
 }
-
+/*css delle eventuali frasi*/
 font{
     font-size: 10px;
     font-family: Arial;
@@ -18,13 +19,13 @@ font{
     position: inherit;
     display: block;
 }
-
+/*css per sistemare lo sfondo del body*/
 body{
     background-attachment: fixed;
     background-size: cover;
     display: block;
 }
-
+/*css dei tasti*/
 .tasto{
     background-repeat: no-repeat;
     height: 10px;
@@ -33,7 +34,7 @@ body{
     top:5px;
     right: 5px;
 }
-
+/*css dei nomi dei creatori*/
 .nomi{
     bottom: 3px;
     right: 3px;
@@ -42,7 +43,7 @@ body{
     color:yellow;
     position:fixed;
 }
-
+/*css per fissare al centro*/
 .centra{
     top: 50%;
     right:48.6%;
@@ -54,7 +55,7 @@ body{
     color: lime;
     font-size: 25px;
 }
-
+/*css del bottone di start del gioco*/
 .gameon{
     transition-duration: 400ms;
     background-color: dimgray;
@@ -72,17 +73,17 @@ body{
     border: none;
     border-radius: 12px;
 }
-
+/*css scritte di debug*/
 #debug{
     position: fixed;
     bottom: 60px;
     left: 5px;
 }
-
+/*altezza fish*/
 .fish{
     height: 45px;
 }
-
+/*posizione delle fish*/
 #fish_display{
     position: fixed;
     bottom: 20px;
@@ -113,14 +114,14 @@ td{
     font-size: 17px;
     color: antiquewhite;
 }
-
+/*css pulsante del volume*/
 .volume{
     position: fixed;
     top: 5px;
     left: 5px;
     color: white;
 }
-
+/*css per centrare le scritte all'interno del pulsante a tendina*/
 .menu{
     text-align: center;
 }

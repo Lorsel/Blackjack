@@ -1,8 +1,9 @@
+/*css del retro delle carte posizionate dal mazziere*/
 #back_card{
     height: 60px;
     width: 43.61px;
 }
-
+/*carte che il mazziere si dà*/
 .cella_mazz_1{
     position: fixed;
     height: 60px;
