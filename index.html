@@ -41,16 +41,18 @@
       <option class="menu" value="cards">Posiziona Carte</option>
       <option class="menu" value="fish">Fish</option>
       <option class="menu" value="comp">Compilazione</option>
+      <option class="menu" value="inc">Prossimo Player</option>
     </select>
   </form>
 
   <div id="debug"></div>
   <!--pulsanti dei giocatori-->
   <form class="actionPos">
-    <input type="button" class="action" style="background-color: green" value="Hit" onclick="hit()">
+    <input type="button" class="action" style="background-color: chocolate" value="Bet" onClick="bet()">
+    <input type="button" class="action" style="background-color: green" value="Hit" onClick="hit()">
     <input type="button" class="action" style="background-color: green" value="Split">
     <input type="button" class="action" style="background-color: green" value="Doble Down">
-    <input type="button" class="action" style="background-color: darkgoldenrod" value="Stand">
+    <input type="button" class="action" style="background-color: darkgoldenrod" value="Stand" onClick="stand()">
     <input type="button" class="action" style="background-color: darkgoldenrod" value="Insurance">
     <input type="button" class="action" style="background-color: red" value="Fold">
   </form>

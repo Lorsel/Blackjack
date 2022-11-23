@@ -1,9 +1,24 @@
-.but{
+#but1{
     position: relative;
 }
-
-.but:hover{
+#but1:hover{
     position: fixed;
     bottom: 0px;
     right: 0px;
+}
+#but2{
+    position: fixed;
+    top: 80px;
+    right: 10px;
+}
+#but2:hover{
+    position: fixed;
+    top: 97.5%;
+    right: 95.6%;
+}
+#mario{
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
 }

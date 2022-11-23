@@ -7,17 +7,17 @@ let ico = [
 ]
 
 let dataBase = [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, fish: 772}
+    {}, /* 0 */
+    {}, /* 1 */
+    {}, /* 2 */
+    {}, /* 3 */
+    {}, /* 4 */
+    {}, /* 5 */
+    {}, /* 6 */
+    {}, /* 7 */
+    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, bet: 0, fish: 772} /* 8 */
 ];
-let playerN = null;
+let start = true;
 let isAlive = null;
 let whoPlaying = 0;
 let firstAce = true;
@@ -37,7 +37,6 @@ var button = document.getElementById("gameon");
 var audio = document.getElementById("audio");
 var fish_value = document.getElementsByClassName("fish_value");
 var but = document.getElementById("but");
-
 var rand = document.getElementById("rand");
 var puls = document.getElementById("partita");
 var retro = document.getElementById("retro");
@@ -47,7 +46,7 @@ function debPrint() {
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 13; j++) {
             //ico[i][j] = "ico/" + i + "/" + (j + 1) + ".jpg";
-            doc.innerHTML += "<img id='" + i + "_" + j + "' src='ico/" + i + "/original/" + j + ".png'>"
+            doc.innerHTML += "<img id='" + i + "_" + j + "' src='ico/" + i + "/" + j + ".jpg'>"
         }
     }
 
@@ -106,6 +105,9 @@ function menu(page){
     else if(page.value == "comp"){
         comp(true);
     }
+    else if(page.value == "inc"){
+        nextPlayer();
+    }
     else {
         window.location = "./index/" + page.value + ".html";
     }
@@ -151,6 +153,7 @@ function changeName(playerID){
 function card_gen(){
     var g = Math.floor(Math.random() * 4);
     var n = Math.floor(Math.random() * 12);
+    //TODO fare il controllo delle carte disponibili ed eliminarle dall'array(ico) quando selezionate, se non ce ne sono disponibili ri-eseguire il random
     return [g,n];
 }
 
@@ -178,17 +181,19 @@ function gioca(){
         var card = card_gen();
         retro.innerHTML += "<img class=\"cella_mazz_"+curpi+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
         let cardID = card[0] + "/" + card[1];
-        cardAssign(8, cardID, card[1]);
+        cardAssign(7, cardID, card[1]);
         setTimeout(gioca, 1000);
+
+        nextPlayer();
     }
     i++;
 }
 
 function hit(){
-    var c=0, table=whoPlaying;
+    var c=0, table=whoPlaying+1;
     while (dataBase[whoPlaying].card[c] != null) {
         c++;
-        table += 8;
+        table += 7
     }
     if(c < dataBase[whoPlaying].card.length) {
         var l = card_gen();
@@ -199,7 +204,7 @@ function hit(){
     else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " hai raggiunto il numero massimo di carte per giocatore");
     }
-    console.log(whoPlaying + "|" + c + "|" + dataBase[whoPlaying].card.length);
+    console.log(whoPlaying + "|" + c + "|" + dataBase[whoPlaying].card.length + "|" + table);
 }
 
 function split(){
@@ -216,6 +221,7 @@ function double_down(){
 
 function stand(){
     /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
+    nextPlayer();
 }
 
 function insurance(){
@@ -226,23 +232,7 @@ function fold(){
     /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/
 }
 
-
-//per creare degli stalli di tempo per tra un turno e l'altro
-/*function demo () {
-    // (A) DO SOMETHING
-    rand.innerHTML += "<p> ciao </p>";
-
-    // (B) RUN THIS AFTER 1 SECOND
-    setTimeout(demoA, 10000);
-
-    // (C) NOTE - SETTIMEOUT() IS ASYNC
-    // THIS WILL CONTINUE TO RUN!
-    console.log("Third");
-  }
-
-  function demoA () { rand.innerHTML += "<p> mondo </p>"; }*/
-
-  function fishValue(playerID){
+function fishValue(playerID){
     let value = dataBase[playerID].fish;
     let fi = [500,100,25,20,5,1];
     let t = 0;
@@ -254,7 +244,8 @@ function fold(){
         fish_value[i].innerHTML = "" + t; t=0;
     }
     debug.innerHTML = "<p style='color: cyan'>Turno di:</p>";
-    debug.innerHTML += "<p style='color: fuchsia'>Player"+ (playerID+1) + ": " + dataBase[playerID].name + "</p>";
+    debug.innerHTML += "<p style='color: fuchsia'> Player"+ (playerID+1) + ": " + dataBase[playerID].name + "</p>";
+    defPuntLimit(playerID);
 }
 
 // {name, card, card_value, card_sum, insurance, splitted, fish}
@@ -269,6 +260,7 @@ function comp(flag){
         dataBase[i].insurance = 0;
         dataBase[i].splitted = false;
         dataBase[i].lost = false;
+        dataBase[i].bet = 0;
         dataBase[i].fish = 500;
     }
     console.log(dataBase);
@@ -286,9 +278,12 @@ function reset(){
     alert("Reset Tavolo");
     comp(false);
     firstAce = true;
-    isAlive = playerN;
+    isAlive = num;
     whoPlaying = 0;
     but.innerHTML = "";
+    i = 0;
+    curpi = 0;
+    flag = true;
 }
 
 function cardAssign(playerID, card_id, card_val){
@@ -334,19 +329,41 @@ function cardValue(card){
 }
 
 function nextPlayer(){
-    if(whoPlaying>=6){
+    if(start){
+        start = false;
+        fishValue(whoPlaying);
+        return 0;
+    }
+    if(whoPlaying>=num){
         whoPlaying = 0;
     }
     else{
         whoPlaying++;
     }
-    if(dataBase[whoPlaying].lost){
+    while(dataBase[whoPlaying].lost){
         whoPlaying++;
     }
     if(isAlive <= 0){
         endGame();
     }
     fishValue(whoPlaying);
+}
+
+function bet(){
+    var puntata = (dataBase[whoPlaying].fish + 50);
+    while(puntata > dataBase[whoPlaying].fish) {
+        puntata = prompt("Quando si desidera scommettere?");
+        if(puntata > dataBase[whoPlaying].fish){
+            alert("Puntata più alta di quando si possiede" +
+                "     Puntata --> " + puntata +
+                "     Conto --> " + dataBase[whoPlaying].fish);
+        }
+    }
+    dataBase[whoPlaying].bet += puntata;
+    dataBase[whoPlaying].fish -= puntata;
+    alert("Puntata effettuata" +
+        "     Puntata --> " + puntata +
+        "     Conto --> " + dataBase[whoPlaying].fish);
 }
 
 function endGame(playerID){
