@@ -1,7 +1,10 @@
 // C = 0 | Q = 1 | F = 2 | P = 3
 //TODO settare dimensioni immagini
-const mat = [["C",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["Q",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["F",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["P",[1,2,3,4,5,6,7,8,9,10,11,12,13]]];
-var ico = [[],[],[],[]];
+const mat = [["C",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["Q",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["F",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["P",[1,2,3,4,5,6,7,8,9,10,11,12,13]]]; //52
+let ico = [
+    [],
+    []
+]
 
 let dataBase = [
     {},
@@ -16,7 +19,7 @@ let dataBase = [
 ];
 let playerN = null;
 let isAlive = null;
-let whoPlaying = 8;
+let whoPlaying = 0;
 let firstAce = true;
 
 const def_heigth = 667;
@@ -26,6 +29,7 @@ let isPlaying = false;
 let num = 0;
 let i = 0;
 let curpi = 0;
+let flag = true;
 
 var doc = document.getElementById("test");
 var debug = document.getElementById("debug");
@@ -144,6 +148,12 @@ function changeName(playerID){
 }
 
 /* GAME */
+function card_gen(){
+    var g = Math.floor(Math.random() * 4);
+    var n = Math.floor(Math.random() * 12);
+    return [g,n];
+}
+
 function gioca(){
     if(i==0){
         comp(true);
@@ -156,35 +166,40 @@ function gioca(){
         setTimeout(gioca, 1000);
     }
     else if(i<=num){
-        var g=0, n=0;
-        g = Math.floor(Math.random() * 4);
-        n = Math.floor(Math.random() * 12);
-        retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+g+"/"+n+".jpg'>";
-        let cardID = "" + g + "/" + n;
-        cardAssign(i-1, cardID, n);
+        var card = card_gen();
+        retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
+        let cardID = "" + card[0] + "/" + card[1];
+        cardAssign(i-1, cardID, card[1]);
         setTimeout(gioca, 1000);
     }
-    else if(i>num){
-        i = 8;
+    else if(i>num && flag){
+        flag = false;
         curpi++;
-        var g=0, n=0;
-        g = Math.floor(Math.random() * 4);
-        n = Math.floor(Math.random() * 12);
-        retro.innerHTML += "<img class=\"cella_mazz_"+curpi+"\" src='ico/"+g+"/"+n+".jpg'>";
-        let cardID = "" + g + "/" + n;
-        cardAssign(i-1, cardID, n);
+        var card = card_gen();
+        retro.innerHTML += "<img class=\"cella_mazz_"+curpi+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
+        let cardID = card[0] + "/" + card[1];
+        cardAssign(8, cardID, card[1]);
         setTimeout(gioca, 1000);
     }
     i++;
 }
 
-
-function double_down(){
-    /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
-}
-
-function insurance(){
-    /*salva metà della puntata di un giocatore in caso di giocata perdente*/
+function hit(){
+    var c=0, table=whoPlaying;
+    while (dataBase[whoPlaying].card[c] != null) {
+        c++;
+        table += 8;
+    }
+    if(c < dataBase[whoPlaying].card.length) {
+        var l = card_gen();
+        retro.innerHTML += "<img class=\"cella_" + table + "\" src='ico/" + l[0] + "/" + l[1] + ".jpg'>";
+        let cardID = l[0] + "/" + l[1];
+        cardAssign(whoPlaying, cardID, l[1]);
+    }
+    else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " hai raggiunto il numero massimo di carte per giocatore");
+    }
+    console.log(whoPlaying + "|" + c + "|" + dataBase[whoPlaying].card.length);
 }
 
 function split(){
@@ -194,6 +209,23 @@ function split(){
         -aggiunge una carta a ciascuna altra carta separata;
     */
 }
+
+function double_down(){
+    /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
+}
+
+function stand(){
+    /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
+}
+
+function insurance(){
+    /*salva metà della puntata di un giocatore in caso di giocata perdente*/
+}
+
+function fold(){
+    /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/
+}
+
 
 //per creare degli stalli di tempo per tra un turno e l'altro
 /*function demo () {
@@ -227,7 +259,7 @@ function split(){
 
 // {name, card, card_value, card_sum, insurance, splitted, fish}
 function comp(flag){
-    for(var i=0;i<7;i++){
+    for(var i=0;i<8;i++){
         if(flag){
             dataBase[i].name = (i+1);
         }
@@ -239,6 +271,15 @@ function comp(flag){
         dataBase[i].lost = false;
         dataBase[i].fish = 500;
     }
+    console.log(dataBase);
+    for(var l=0;l<2;l++){
+        for(var i=0;i<4;i++){
+            for(var j=0;j<13;j++){
+                ico[l].push(i + "/" + j);
+            }
+        }
+    }
+    console.log(ico)
 }
 
 function reset(){
@@ -274,8 +315,8 @@ function cardAssign(playerID, card_id, card_val){
 }
 
 function cardValue(card){
-    if(card>0 && card<=9){
-        if(card == 0 && firstAce == true){
+    if(card>=0 && card<=9){
+        if(card == 0 && firstAce){
             firstAce = false;
             console.log(card+" Dio Negro 1");
             return 11*1;
