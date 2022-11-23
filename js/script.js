@@ -27,6 +27,7 @@ let isPlaying = false;
 let num = 0;
 let i = 0;
 let curpi = 0;
+let flag = 0;
 
 var doc = document.getElementById("test");
 var debug = document.getElementById("debug");
@@ -157,6 +158,9 @@ function gioca(){
         setTimeout(gioca, 1000);
     }
     else if(i<=num){
+        if(i == num+1){
+            i += 6;
+        }
         var g=0, n=0;
         g = Math.floor(Math.random() * 4);
         n = Math.floor(Math.random() * 12);
@@ -165,8 +169,8 @@ function gioca(){
         cardAssign(i-1, cardID, n);
         setTimeout(gioca, 1000);
     }
-    else if(i>num){
-        i = 8;
+    else if(i>num && flag == 0){
+        flag = 1;
         curpi++;
         var g=0, n=0;
         g = Math.floor(Math.random() * 4);
