@@ -1,0 +1,22 @@
+#estegg{
+    height: 1px;
+    width: 1px;
+    border: 1px solid white;
+}
+
+.int{
+    color: red;
+    text-align: center;
+}
+
+.tit{
+    text-align: center;
+    color:darkorchid;
+}
+
+.puls{
+    top: 50px;
+    right:10px;
+    position: fixed;
+    display: block;
+}
