@@ -24,6 +24,7 @@ let firstAce = true;
 const def_heigth = 667;
 const def_width = 1366;
 let isPlaying = false;
+let nowplaying = false;
 
 let num = 0;
 let i = 0;
@@ -158,6 +159,7 @@ function card_gen(){
 }
 
 function gioca(){
+    nowplaying = true;
     if(i==0){
         comp(true);
         var number=0;
@@ -190,6 +192,7 @@ function gioca(){
 }
 
 function hit(){
+    if(nowplaying == true){
     var c=0, table=whoPlaying+1;
     while (dataBase[whoPlaying].card[c] != null) {
         c++;
@@ -209,32 +212,56 @@ function hit(){
         alert("ATTENZIONE Player" + (whoPlaying+1) + " non hai ancora puntato");
     }
     console.log(whoPlaying + "|" + c + "|" + dataBase[whoPlaying].card.length + "|" + table);
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non è ancora partito");
+    }
 }
 
 function split(){
+    if(nowplaying == true){
     /*divide le carte del giocatore con tre possibilità
         -separa due carte e ne aggiunge una uguale alla seconda delle 2;
         -conta le due carte iniziali del giocatore come una carta sola;
         -aggiunge una carta a ciascuna altra carta separata;
     */
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function double_down(){
+    if(nowplaying == true){
     /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function stand(){
+    if(nowplaying == true){
     /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
     dataBase[whoPlaying].standed = true;
     nextPlayer();
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function insurance(){
+    if(nowplaying == true){
     /*salva metà della puntata di un giocatore in caso di giocata perdente*/
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function fold(){
-    /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/
+    if(nowplaying == true){
+        /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/    
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
+    
 }
 
 function fishValue(playerID){
@@ -355,6 +382,7 @@ function nextPlayer(){
 }
 
 function bet(){
+    if(nowplaying == true){
     var puntata = (dataBase[whoPlaying].fish + 50);
     while(puntata > dataBase[whoPlaying].fish) {
         puntata = prompt("Quando si desidera scommettere?");
@@ -369,6 +397,9 @@ function bet(){
     alert("Puntata effettuata" +
         "     Puntata --> " + puntata +
         "     Conto --> " + dataBase[whoPlaying].fish);
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function endGame(playerID){
