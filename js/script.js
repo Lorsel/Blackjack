@@ -1,5 +1,4 @@
 // C = 0 | Q = 1 | F = 2 | P = 3
-//TODO settare dimensioni immagini
 const mat = [["C",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["Q",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["F",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["P",[1,2,3,4,5,6,7,8,9,10,11,12,13]]]; //52
 let ico = [
     [],
@@ -15,7 +14,7 @@ let dataBase = [
     {}, /* 5 */
     {}, /* 6 */
     {}, /* 7 */
-    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, bet: 0, fish: 772} /* 8 */
+    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, bet: 0, fish: 772} /* 8 */
 ];
 let start = true;
 let isAlive = null;
@@ -153,6 +152,7 @@ function changeName(playerID){
 function card_gen(){
     var g = Math.floor(Math.random() * 4);
     var n = Math.floor(Math.random() * 12);
+    var check = g + "/" + n;
     //TODO fare il controllo delle carte disponibili ed eliminarle dall'array(ico) quando selezionate, se non ce ne sono disponibili ri-eseguire il random
     return [g,n];
 }
@@ -221,6 +221,7 @@ function double_down(){
 
 function stand(){
     /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
+    dataBase[whoPlaying].standed = true;
     nextPlayer();
 }
 
