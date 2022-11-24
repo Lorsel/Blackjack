@@ -193,16 +193,20 @@ function hit(){
     var c=0, table=whoPlaying+1;
     while (dataBase[whoPlaying].card[c] != null) {
         c++;
-        table += 7
+        table += 7;
     }
-    if(c < dataBase[whoPlaying].card.length) {
-        var l = card_gen();
-        retro.innerHTML += "<img class=\"cella_" + table + "\" src='ico/" + l[0] + "/" + l[1] + ".jpg'>";
-        let cardID = l[0] + "/" + l[1];
-        cardAssign(whoPlaying, cardID, l[1]);
-    }
-    else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " hai raggiunto il numero massimo di carte per giocatore");
+    if(dataBase[whoPlaying].bet != 0){
+        if(c < dataBase[whoPlaying].card.length) {
+            var l = card_gen();
+            retro.innerHTML += "<img class=\"cella_" + table + "\" src='ico/" + l[0] + "/" + l[1] + ".jpg'>";
+            let cardID = l[0] + "/" + l[1];
+            cardAssign(whoPlaying, cardID, l[1]);
+        }
+        else{
+            alert("ATTENZIONE Player" + (whoPlaying+1) + " hai raggiunto il numero massimo di carte per giocatore");
+        }
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " non hai ancora puntato");
     }
     console.log(whoPlaying + "|" + c + "|" + dataBase[whoPlaying].card.length + "|" + table);
 }
