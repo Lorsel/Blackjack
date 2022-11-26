@@ -14,7 +14,7 @@ let dataBase = [
     {}, /* 5 */
     {}, /* 6 */
     {}, /* 7 */
-    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, bet: 0, fish: 772} /* 8 */
+    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, punt: false, bet: 0, fish: 772} /* 8 */
 ];
 let start = true;
 let isAlive = null;
@@ -168,6 +168,7 @@ function gioca(){
         }
         puls.style.display="none";
         num = number;
+        isAlive = number;
         setTimeout(gioca, 1000);
     }
     else if(i<=num){
@@ -232,6 +233,8 @@ function split(){
 function double_down(){
     if(nowplaying == true){
     /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
+        dataBase[whoPlaying].bet *=2;
+        /*da finire per lorsel perchè non ho idea di come far richiedere al giocatore una sola carta in più*/
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
@@ -249,6 +252,7 @@ function stand(){
 
 function insurance(){
     if(nowplaying == true){
+        dataBase[whoPlaying].insurance++;
     /*salva metà della puntata di un giocatore in caso di giocata perdente*/
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
@@ -257,6 +261,7 @@ function insurance(){
 
 function fold(){
     if(nowplaying == true){
+        dataBase[whoPlaying].lost = true;
         /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/    
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
@@ -316,6 +321,7 @@ function reset(){
     i = 0;
     curpi = 0;
     flag = true;
+    retro = "";
 }
 
 function cardAssign(playerID, card_id, card_val){
@@ -366,7 +372,7 @@ function nextPlayer(){
         fishValue(whoPlaying);
         return 0;
     }
-    if(whoPlaying>=num){
+    if(whoPlaying == number){
         whoPlaying = 0;
     }
     else{
@@ -383,23 +389,28 @@ function nextPlayer(){
 
 function bet(){
     if(nowplaying == true){
-    var puntata = (dataBase[whoPlaying].fish + 50);
-    while(puntata > dataBase[whoPlaying].fish) {
-        puntata = prompt("Quando si desidera scommettere?");
-        if(puntata > dataBase[whoPlaying].fish){
-            alert("Puntata più alta di quando si possiede" +
+        if(dataBase[whoPlaying].punt != true){
+            dataBase[whoPlaying].punt = true;
+            var puntata = (dataBase[whoPlaying].fish + 50);
+            while(puntata > dataBase[whoPlaying].fish) {
+            puntata = prompt("Quando si desidera scommettere?");
+                if(puntata > dataBase[whoPlaying].fish){
+                    alert("Puntata più alta di quando si possiede" +
+                    "     Puntata --> " + puntata +
+                        "     Conto --> " + dataBase[whoPlaying].fish);
+                }
+            }
+            dataBase[whoPlaying].bet += puntata;
+            dataBase[whoPlaying].fish -= puntata;
+            alert("Puntata effettuata" +
                 "     Puntata --> " + puntata +
                 "     Conto --> " + dataBase[whoPlaying].fish);
+        }else{
+            alert("hai già puntato trmn");
         }
-    }
-    dataBase[whoPlaying].bet += puntata;
-    dataBase[whoPlaying].fish -= puntata;
-    alert("Puntata effettuata" +
-        "     Puntata --> " + puntata +
-        "     Conto --> " + dataBase[whoPlaying].fish);
-    }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
-    }
+        }else{
+            alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+        }
 }
 
 function endGame(playerID){
@@ -412,10 +423,22 @@ function endGame(playerID){
 
 /*fine del gioco, semplice refresh della pagina*/
 function ref(){
-    var conferma = window.confirm("sei sicuro di voler refreshare il gioco:");
+    var conferma = window.confirm("sei sicuro di voler smettere di giocare?");
     if(conferma){
         window.location.reload();
     }else{
-        window.alert("attento a ciò che premi onissassoid");
+        window.alert("attento a ciò che premi onissassaoid");
     }
+}
+
+/*continua il gioco ripulendo il tabellone*/
+function continua(){
+    if(dataBase[whoPlaying].standed == whoPlaying){
+        clearBox();
+    }
+    gioca();
+}
+
+function clearBox(){
+
 }
