@@ -409,3 +409,13 @@ function endGame(playerID){
     but.innerHTML += "<p>" + dataBase[playerID].name + "</p>";
     reset();
 }
+
+/*fine del gioco, semplice refresh della pagina*/
+function ref(){
+    var conferma = window.confirm("sei sicuro di voler refreshare il gioco:");
+    if(conferma){
+        window.location.reload();
+    }else{
+        window.alert("attento a ciò che premi onissassoid");
+    }
+}

@@ -125,3 +125,25 @@ td{
 .menu{
     text-align: center;
 }
+/*css del pulsante per concludere la partita(semplice refresh della pagina)*/
+.continua{
+    background-color: lightgreen;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    position: fixed;
+    top: 46%;
+    right: 5px;
+}
+
+/*css del pulsante per continuare la partita(riparte la funzione gioca, pulendo il tavolo)*/
+.fine{
+    background-color: red;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    position: fixed;
+    top:50%;
+    right: 5px;
+}
+
