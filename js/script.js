@@ -186,8 +186,8 @@ function gioca(){
         }
         puls.style.display="none";
         num = number;
-        isAlive = number;
         }
+        isAlive = num;
         nowplaying = true;
         setTimeout(gioca, 1000);
     }
@@ -271,10 +271,12 @@ function stand() {
             alert("Non puoi fermarti perchè hai perso o ti sei già fermato");
         } else {
             dataBase[whoPlaying].standed = true;
+            isAlive--;
             nextPlayer();
         }
     }
 }
+
 function insurance(){
     if(nowplaying == true){
         dataBase[whoPlaying].insurance++;
@@ -292,6 +294,7 @@ function fold(){
     else if(nowplaying == true){
         dataBase[whoPlaying].lost = true;
         dataBase[whoPlaying].bet = 0;
+        isAlive--;
         nextPlayer();    
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
@@ -372,8 +375,6 @@ function cardAssign(playerID, card_id, card_val){
     }
     else{
         alert("Limite Numero di Carte Raggiunto");
-        dataBase[playerID].lost = true;
-        isAlive--;
     }
 
 }
@@ -467,13 +468,7 @@ function ref(){
 
 /*continua il gioco ripulendo il tabellone*/
 function continua(){
-    var morti = 0;
-    for(var i=0;i<num;i++){
-        if(dataBase[i].lost == true || dataBase[i].standed == true){
-            morti++;
-        }
-    }
-    if(morti == num){
+    if(isalive == 0){
         reset();
         gioca();
     }else{
