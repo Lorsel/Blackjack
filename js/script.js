@@ -150,11 +150,29 @@ function changeName(playerID){
 
 /* GAME */
 function card_gen(){
-    var g = Math.floor(Math.random() * 4);
-    var n = Math.floor(Math.random() * 12);
-    var check = g + "/" + n;
+    var go = true
+    console.log(ico[1].length);
+    while(go) {
+        var g = Math.floor(Math.random() * 4);
+        var n = Math.floor(Math.random() * 12);
+        var check = g + "/" + n;
+        var found = false;
+        for (var i = 0; i < 2; i++) {
+            for (var j = 0; i < ico[i].length; j++) {
+                if (ico[i][j] == check) {
+                    found = true;
+                    ico[i][j] = null;
+                }
+                console.log(ico[i][j]);
+            }
+        }
+        if(found==true){
+            console.log(found);
+            go = false;
+            return[g,n];
+        }
+    }
     //TODO fare il controllo delle carte disponibili ed eliminarle dall'array(ico) quando selezionate, se non ce ne sono disponibili ri-eseguire il random
-    return [g,n];
 }
 
 function gioca(){
@@ -189,6 +207,23 @@ function gioca(){
     i++;
 }
 
+function bet(){
+    var puntata = (dataBase[whoPlaying].fish + 50);
+    while(puntata > dataBase[whoPlaying].fish) {
+        puntata = prompt("Quando si desidera scommettere?");
+        if(puntata > dataBase[whoPlaying].fish){
+            alert("Puntata più alta di quando si possiede" +
+                "     Puntata --> " + puntata +
+                "     Conto --> " + dataBase[whoPlaying].fish);
+        }
+    }
+    dataBase[whoPlaying].bet += puntata;
+    dataBase[whoPlaying].fish -= puntata;
+    alert("Puntata effettuata" +
+        "     Puntata --> " + puntata +
+        "     Conto --> " + dataBase[whoPlaying].fish);
+}
+
 function hit(){
     var c=0, table=whoPlaying+1;
     while (dataBase[whoPlaying].card[c] != null) {
@@ -208,7 +243,9 @@ function hit(){
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " non hai ancora puntato");
     }
-    console.log(whoPlaying + "|" + c + "|" + dataBase[whoPlaying].card.length + "|" + table);
+   if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
+       alert("Non puoi richiedere altre carte perchè ti sei fermato o ti sei arreso");
+   }
 }
 
 function split(){
@@ -225,8 +262,13 @@ function double_down(){
 
 function stand(){
     /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
-    dataBase[whoPlaying].standed = true;
-    nextPlayer();
+    if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
+        alert("Non puoi fermarti perchè hai perso o ti sei già fermato");
+    }
+    else {
+        dataBase[whoPlaying].standed = true;
+        nextPlayer();
+    }
 }
 
 function insurance(){
@@ -235,6 +277,13 @@ function insurance(){
 
 function fold(){
     /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/
+    if(dataBase[whoPlaying].lost){
+        alert("Nono puoi arrenderti perchè hai gia perso");
+    }
+    else{
+        dataBase[whoPlaying].fold = true;
+        nextPlayer();
+    }
 }
 
 function fishValue(playerID){
@@ -351,24 +400,10 @@ function nextPlayer(){
     while(dataBase[whoPlaying].lost){
         whoPlaying++;
     }
-    fishValue(whoPlaying);
-}
-
-function bet(){
-    var puntata = (dataBase[whoPlaying].fish + 50);
-    while(puntata > dataBase[whoPlaying].fish) {
-        puntata = prompt("Quando si desidera scommettere?");
-        if(puntata > dataBase[whoPlaying].fish){
-            alert("Puntata più alta di quando si possiede" +
-                "     Puntata --> " + puntata +
-                "     Conto --> " + dataBase[whoPlaying].fish);
-        }
+    while(dataBase[whoPlaying].standed){
+        whoPlaying++;
     }
-    dataBase[whoPlaying].bet += puntata;
-    dataBase[whoPlaying].fish -= puntata;
-    alert("Puntata effettuata" +
-        "     Puntata --> " + puntata +
-        "     Conto --> " + dataBase[whoPlaying].fish);
+    fishValue(whoPlaying);
 }
 
 function endGame(playerID){
