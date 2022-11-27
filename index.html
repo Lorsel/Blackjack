@@ -15,7 +15,6 @@
 
   <form id="but">
     <input type="button" name="rand" id="partita" value="Gioca" onclick="gioca()" class="gameon"/>
-    <input type="button" name="continua" id="replay" value="continua" onclick="continua()" class="continua" />
     <input type="button" name="end" id="fine" value="fine" onclick="ref()" class="fine"/>
   </form>
 
@@ -35,7 +34,7 @@
 
       <option class="menu" value="name">Cambia Nome</option>
       <option class="menu" value="close">Logout</option>
-
+<!--
       <option class="menu" value="null4">--- DEV OPTION ---</option>
 
       <option class="menu" value="print">Printa Tutto</option>
@@ -44,19 +43,20 @@
       <option class="menu" value="fish">Fish</option>
       <option class="menu" value="comp">Compilazione</option>
       <option class="menu" value="inc">Prossimo Player</option>
-      <option class="menu" value="reset">Reset</option>
+      <option class="menu" value="inv">Inventario</option>
+      <option class="menu" value="reset">Reset</option> -->
     </select>
   </form>
 
   <div id="debug"></div>
   <!--pulsanti dei giocatori-->
   <form class="actionPos">
-    <input type="button" class="action" style="background-color: chocolate" value="Bet" onClick="bet()">
-    <input type="button" class="action" style="background-color: green" value="Hit" onClick="hit()">
-    <input type="button" class="action" style="background-color: green" value="Doble Down">
-    <input type="button" class="action" style="background-color: darkgoldenrod" value="Stand" onClick="stand()">
-    <input type="button" class="action" style="background-color: darkgoldenrod" value="Insurance">
-    <input type="button" class="action" style="background-color: red" value="Fold">
+    <input type="button" class="action" style="background-color: chocolate" value="Bet" onclick="bet()">
+    <input type="button" class="action" style="background-color: green" value="Hit" onclick="hit()">
+    <input type="button" class="action" style="background-color: green" value="Doble Down" onclick="double_down()">
+    <input type="button" class="action" style="background-color: darkgoldenrod" value="Stand" onclick="stand()">
+    <input type="button" class="action" style="background-color: darkgoldenrod" value="Insurance" onclick="insurance()">
+    <input type="button" class="action" style="background-color: red" value="Fold" onclick="fold()">
   </form>
   <!--table con annesso count delle fish del giocatore-->
   <form id="fish_display">

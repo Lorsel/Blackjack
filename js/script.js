@@ -109,8 +109,15 @@ function menu(page){
     else if(page.value == "inc"){
         nextPlayer();
     }
+    else if(page.value == "inv"){
+        var invo = [];
+        for(var l=0;l<num;l++){
+            invo.push(dataBase[l].card_sum)
+        }
+        console.log(invo);
+    }
     else if(page.value == "reset"){
-        reset(true);
+        reset();
     }
     else {
         window.location = "./index/" + page.value + ".html";
@@ -194,9 +201,9 @@ function gioca(){
         nowplaying = true;
         setTimeout(gioca, 1000);
     }else if(i<=num){
-        var card = card_gen();
+        let card = card_gen();
         retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
-        let cardID = "" + card[0] + "/" + card[1];
+        let cardID = card[0] + "/" + card[1];
         cardAssign(i-1, cardID, card[1]);
         setTimeout(gioca, 1000);
     }else if(i>num && flag){
@@ -223,7 +230,10 @@ function hit() {
             c++;
             table += 7;
         }
-        if (dataBase[whoPlaying].bet != 0) {
+        if (dataBase[whoPlaying].lost || dataBase[whoPlaying].standed) {
+            alert("Non puoi richiedere altre carte perchè ti sei fermato o ti sei arreso");
+        }
+        else if (dataBase[whoPlaying].bet != 0) {
             if(dataBase[whoPlaying].double == false) {
                 if (c < dataBase[whoPlaying].card.length) {
                     var l = card_gen();
@@ -232,15 +242,19 @@ function hit() {
                     cardAssign(whoPlaying, cardID, l[1]);
                 }
                 else {
-                    alert("ATTENZIONE Player" + (whoPlaying + 1) + " hai raggiunto il numero massimo di carte per giocatore");
+                    alert("ATTENZIONE " + dataBase[whoPlaying].name + " hai raggiunto il numero massimo di carte per giocatore");
+                    stand();
                 }
             }
         }
         else {
-            alert("ATTENZIONE Player" + (whoPlaying + 1) + " non hai ancora puntato");
+            alert("ATTENZIONE " + dataBase[whoPlaying].name + " non hai ancora puntato");
         }
-        if (dataBase[whoPlaying].lost || dataBase[whoPlaying].standed) {
-            alert("Non puoi richiedere altre carte perchè ti sei fermato o ti sei arreso");
+        if(dataBase[whoPlaying].card_sum > 21){
+            dataBase[whoPlaying].lost = true;
+            alert("Il Giocatore: " + dataBase[whoPlaying].name + " ha perso superando il 21");
+            isAlive --;
+            nextPlayer();
         }
     }
 }
@@ -253,7 +267,7 @@ function double_down(){
         dataBase[whoPlaying].double = true;
         /*da finire per lorsel perchè non ho idea di come far richiedere al giocatore una sola carta in più*/
     }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+        alert("ATTENZIONE " + dataBase[whoPlaying].name+ " il gioco non e\' ancora partito");
     }
 }
 
@@ -275,7 +289,7 @@ function insurance(){
         dataBase[whoPlaying].insurance++;
     /*salva metà della puntata di un giocatore in caso di giocata perdente*/
     }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+        alert("ATTENZIONE " + dataBase[whoPlaying].name + " il gioco non e\' ancora partito");
     }
 }
 
@@ -290,7 +304,7 @@ function fold(){
         isAlive--;
         nextPlayer();
     }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+        alert("ATTENZIONE " + dataBase[whoPlaying].name + " il gioco non e\' ancora partito");
     }
 }
 
@@ -314,40 +328,38 @@ function fishValue(playerID){
 function comp(flag){
     for(var i=0;i<8;i++){
         if(flag){
-            dataBase[i].name = (i+1);
+            dataBase[i].name = "Player" + (i+1);
+            dataBase[i].fish = 500;
         }
         dataBase[i].card = [null,null,null,null];
         dataBase[i].card_value = [null,null,null,null];
         dataBase[i].card_sum = 0;
         dataBase[i].insurance = 0;
-        dataBase[i].splitted = false;
         dataBase[i].lost = false;
         dataBase[i].double = false;
         dataBase[i].punt = false;
         dataBase[i].standed = false;
         dataBase[i].bet = 0;
-        dataBase[i].fish = 500;
     }
     console.log(dataBase);
-    for(var l=0;l<2;l++){
-        for(var i=0;i<4;i++){
-            for(var j=0;j<13;j++){
-                ico[l].push(i + "/" + j);
+    if(flag) {
+        for (var l = 0; l < 2; l++) {
+            for (var i = 0; i < 4; i++) {
+                for (var j = 0; j < 13; j++) {
+                    ico[l].push(i + "/" + j);
+                }
             }
         }
+        console.log(ico);
     }
-    console.log(ico);
 }
 
-function reset(flag){
+function reset(){
     alert("Reset Tavolo");
-    if(flag) {
-        comp(false);
-    }
+    comp(false);
     firstAce = true;
     isAlive = num;
     whoPlaying = 0;
-    but.innerHTML = "";
     i = 0;
     curpi = 0;
     flag = true;
@@ -367,30 +379,31 @@ function cardAssign(playerID, card_id, card_val){
     }
     if(flag){
         dataBase[playerID].card[i] = card_id;
-        dataBase[playerID].card_value[i] = cardValue(parseInt(card_val));
-        dataBase[playerID].card_sum = dataBase[playerID].card_sum + cardValue(parseInt(card_val));
+        let val = cardValue(parseInt(card_val));
+        dataBase[playerID].card_value[i] = val;
+        dataBase[playerID].card_sum += val;
     }
     else{
         alert("Limite Numero di Carte Raggiunto");
     }
-
+    console.log(dataBase[whoPlaying].card_sum);
 }
 
 function cardValue(card){
     if(card>=0 && card<=9){
-        if(card == 0 && firstAce){
+        if(card == 0 && firstAce == true){
             firstAce = false;
-            console.log(card+" Dio Negro 1");
-            return 11*1;
+            card = 11;
+            return card;
         }
         else{
-            console.log(card+" Dio Negro 2");
-            return (card+1)*1;
+            card += 1;
+            return card;
         }
     }
     else if(card>9 && card<=13){
-        console.log(card+" Dio Negro 3");
-        return 10*1;
+        card = 10;
+        return card;
     }
 
 }
@@ -422,8 +435,8 @@ function bet(){
         if(dataBase[whoPlaying].punt != true){
             dataBase[whoPlaying].punt = true;
             var puntata = (dataBase[whoPlaying].fish + 50);
-            while(puntata > dataBase[whoPlaying].fish) {
-            puntata = prompt("Quando si desidera scommettere?");
+            while(puntata > dataBase[whoPlaying].fish || puntata == null) {
+                puntata = prompt("Quando si desidera scommettere?");
                 if(puntata > dataBase[whoPlaying].fish){
                     alert("Puntata più alta di quando si possiede" +
                     "     Puntata --> " + puntata +
@@ -435,47 +448,69 @@ function bet(){
             alert("Puntata effettuata" +
                 "     Puntata --> " + puntata +
                 "     Conto --> " + dataBase[whoPlaying].fish);
+            fishValue(whoPlaying);
         }else{
             alert("hai già puntato trmn");
         }
         }else{
-            alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+            alert("ATTENZIONE " + dataBase[whoPlaying].name + " il gioco non e\' ancora partito");
         }
 }
 
-//TODO dare carte al mazziere
 function curpi_card(){
-    while(curpi<=4) {
+    while(curpi<4) {
         curpi++;
-        let card = card_gen();
-        retro.innerHTML += "<img class=\"cella_mazz_" + curpi + "\" src='ico/" + card[0] + "/" + card[1] + ".jpg'>";
-        let cardID = card[0] + "/" + card[1];
-        cardAssign(7, cardID, card[1]);
+        if(dataBase[7].card_sum > 21){
+            dataBase[7].lost = true;
+        }
+        else if(dataBase[7].card_sum<=17) {
+            let card = card_gen();
+            retro.innerHTML += "<img class=\"cella_mazz_" + curpi + "\" src='ico/" + card[0] + "/" + card[1] + ".jpg'>";
+            let cardID = card[0] + "/" + card[1];
+            cardAssign(7, cardID, card[1]);
+        }
     }
+    console.log(dataBase[7].card_sum);
 }
 
 function endGame(/*playerID*/){
-    /*but.style.color = "fuchsia";
-    but.innerHTML = "<p style='color: cyan'>WINNER:</p>";
-    but.innerHTML += "<p>Player" + playerID + "</p>";
-    but.innerHTML += "<p>" + dataBase[playerID].name + "</p>";*/
     /*qui mettiamo le carte al curpi e poi le confrontiamo con quelle dei giocatori*/
     /*controllo carte + aggiunta/perdita fish*/
     curpi_card();
-    for(var i=0;i<n;i++){
+    for(var i=0;i<num;i++){
         if(dataBase[i].lost == false){
-            if(dataBase[i].card_value == dataBase[7].card_value){
+            if(dataBase[7].lost){
+                dataBase[i].fish += Math.floor(dataBase[i].bet*3/2);
+            }
+            else if(dataBase[i].card_sum == dataBase[7].card_sum){
                 //caso carte uguali al curpi
                 dataBase[i].fish += dataBase[i].bet;
-            }else if(dataBase[i].card_value > dataBase[7].card_value){
+            }else if(dataBase[i].card_sum > dataBase[7].card_sum){
                 //caso carte maggiori
-                dataBase[i].fish += (dataBase[i].bet*3/2);
+                dataBase[i].fish += Math.floor(dataBase[i].bet*3/2);
             }
         }
         dataBase[i].bet = 0;
     }
-    continua();
-}//TODO confrontare il valore delle carte
+    setTimeout(win, 1000);
+    setTimeout(continua, 2200);
+}
+
+function win(){
+    var winner = [];
+    if(dataBase[7].lost) {
+        for (var i = 0; i < num; i++) {
+            if (dataBase[i].lost == false) {
+                winner.push(dataBase[i].name);
+            }
+        }
+    }
+    else{
+        winner[0] = "Mazzero";
+    }
+
+    alert("I vincitori della mano sono: " + winner);
+}
 
 /*fine del gioco, semplice refresh della pagina--FINITO*/
 function ref(){
@@ -489,8 +524,9 @@ function ref(){
 
 /*continua il gioco ripulendo il tabellone*/
 function continua(){
+    console.log(isAlive);
     if(isAlive == 0){
-        reset(false);
+        reset();
     }else{
         alert("ATTENZIONE player: non tutti i giocatori hanno finito!");
     }
