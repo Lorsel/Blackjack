@@ -193,15 +193,13 @@ function gioca(){
         isAlive = num;
         nowplaying = true;
         setTimeout(gioca, 1000);
-    }
-    else if(i<=num){
+    }else if(i<=num){
         var card = card_gen();
         retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
         let cardID = "" + card[0] + "/" + card[1];
         cardAssign(i-1, cardID, card[1]);
         setTimeout(gioca, 1000);
-    }
-    else if(i>num && flag){
+    }else if(i>num && flag){
         flag = false;
         curpi++;
 
