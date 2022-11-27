@@ -14,7 +14,7 @@ let dataBase = [
     {}, /* 5 */
     {}, /* 6 */
     {}, /* 7 (curpi) */
-    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, double: false, punt: false, bet: 0, fish: 772} /* 8 */
+    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, lost: false, standed: false, double: false, punt: false, bet: 0, fish: 772} /* 8 */
 ];
 let start = true;
 let isAlive = null;
