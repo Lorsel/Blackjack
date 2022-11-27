@@ -311,7 +311,7 @@ function fishValue(playerID){
     }
     debug.innerHTML = "<p style='color: cyan'>Turno di:</p>";
     debug.innerHTML += "<p style='color: fuchsia'> Player"+ (playerID+1) + ": " + dataBase[playerID].name + "</p>";
-    defPuntLimit(playerID);//?
+    //defPuntLimit(playerID);//?
 }
 
 // {name, card, card_value, card_sum, insurance, splitted, fish}
