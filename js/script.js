@@ -1,4 +1,8 @@
 // C = 0 | Q = 1 | F = 2 | P = 3
+//TODO controllo carte ico
+//TODO dare carte al mazziere
+//TODO confrontare il valore delle carte
+//TODO sistemare funzione reset pagina / tavolo
 const mat = [["C",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["Q",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["F",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["P",[1,2,3,4,5,6,7,8,9,10,11,12,13]]]; //52
 let ico = [
     [],
@@ -160,7 +164,7 @@ function card_gen(){
         var check = g + "/" + n;
         var found = false;
         for (var i = 0; i < 2; i++) {
-            for (var j = 0; i < ico[i].length; j++) {
+            for (var j = 0; j < ico[i].length; j++) {
                 if (ico[i][j] == check) {
                     found = true;
                     ico[i][j] = null;
