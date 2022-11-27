@@ -262,6 +262,8 @@ function insurance(){
 function fold(){
     if(nowplaying == true){
         dataBase[whoPlaying].lost = true;
+        dataBase[whoPlaying].bet = 0;
+        nextPlayer();
         /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/    
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
@@ -297,6 +299,8 @@ function comp(flag){
         dataBase[i].insurance = 0;
         dataBase[i].splitted = false;
         dataBase[i].lost = false;
+        dataBase[i].punt = false;
+        dataBase[i].standed = false;
         dataBase[i].bet = 0;
         dataBase[i].fish = 500;
     }
@@ -308,7 +312,7 @@ function comp(flag){
             }
         }
     }
-    console.log(ico)
+    console.log(ico);
 }
 
 function reset(){
@@ -372,11 +376,11 @@ function nextPlayer(){
         fishValue(whoPlaying);
         return 0;
     }
-    if(whoPlaying == number){
+
+    whoPlaying++;
+
+    if(whoPlaying >= num){
         whoPlaying = 0;
-    }
-    else{
-        whoPlaying++;
     }
     if(isAlive <= 0){
         endGame();
