@@ -191,15 +191,13 @@ function gioca(){
         isAlive = num;
         nowplaying = true;
         setTimeout(gioca, 1000);
-    }
-    else if(i<=num){
+    }else if(i<=num){
         var card = card_gen();
         retro.innerHTML += "<img class=\"cella_"+i+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
         let cardID = "" + card[0] + "/" + card[1];
         cardAssign(i-1, cardID, card[1]);
         setTimeout(gioca, 1000);
-    }
-    else if(i>num && flag){
+    }else if(i>num && flag){
         flag = false;
         curpi++;
         var card = card_gen();
@@ -406,9 +404,6 @@ function nextPlayer(){
     while(dataBase[whoPlaying].lost == true || dataBase[whoPlaying].standed == true){
         whoPlaying++;
     }
-    while(dataBase[whoPlaying].standed){
-        whoPlaying++;
-    }
     fishValue(whoPlaying);
 }
 
@@ -473,10 +468,8 @@ function ref(){
 
 /*continua il gioco ripulendo il tabellone*/
 function continua(){
-    if(fine == true){
-        fine = false;
+    if(isAlive == 0){
         reset();
-        gioca();
     }else{
         alert("ATTENZIONE player: non tutti i giocatori hanno finito!");
     }
