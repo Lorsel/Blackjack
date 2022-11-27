@@ -14,7 +14,7 @@ let dataBase = [
     {}, /* 5 */
     {}, /* 6 */
     {}, /* 7 */
-    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, bet: 0, fish: 772} /* 8 */
+    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, punt: false, bet: 0, fish: 772} /* 8 */
 ];
 let start = true;
 let isAlive = null;
@@ -24,6 +24,7 @@ let firstAce = true;
 const def_heigth = 667;
 const def_width = 1366;
 let isPlaying = false;
+let nowplaying = false;
 
 let num = 0;
 let i = 0;
@@ -176,6 +177,7 @@ function card_gen(){
 }
 
 function gioca(){
+    nowplaying = true;
     if(i==0){
         comp(true);
         var number=0;
@@ -184,6 +186,7 @@ function gioca(){
         }
         puls.style.display="none";
         num = number;
+        isAlive = number;
         setTimeout(gioca, 1000);
     }
     else if(i<=num){
@@ -225,6 +228,7 @@ function bet(){
 }
 
 function hit(){
+    if(nowplaying == true){
     var c=0, table=whoPlaying+1;
     while (dataBase[whoPlaying].card[c] != null) {
         c++;
@@ -243,24 +247,35 @@ function hit(){
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " non hai ancora puntato");
     }
-   if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
+    if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
        alert("Non puoi richiedere altre carte perchè ti sei fermato o ti sei arreso");
-   }
+    }
 }
 
 function split(){
+    if(nowplaying == true){
     /*divide le carte del giocatore con tre possibilità
         -separa due carte e ne aggiunge una uguale alla seconda delle 2;
         -conta le due carte iniziali del giocatore come una carta sola;
         -aggiunge una carta a ciascuna altra carta separata;
     */
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function double_down(){
+    if(nowplaying == true){
     /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
+        dataBase[whoPlaying].bet *=2;
+        /*da finire per lorsel perchè non ho idea di come far richiedere al giocatore una sola carta in più*/
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function stand(){
+    if(nowplaying == true){
     /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
     if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
         alert("Non puoi fermarti perchè hai perso o ti sei già fermato");
@@ -272,7 +287,12 @@ function stand(){
 }
 
 function insurance(){
+    if(nowplaying == true){
+        dataBase[whoPlaying].insurance++;
     /*salva metà della puntata di un giocatore in caso di giocata perdente*/
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    }
 }
 
 function fold(){
@@ -280,9 +300,13 @@ function fold(){
     if(dataBase[whoPlaying].lost){
         alert("Nono puoi arrenderti perchè hai gia perso");
     }
-    else{
-        dataBase[whoPlaying].fold = true;
+    else if(nowplaying == true){
+        dataBase[whoPlaying].lost = true;
+        dataBase[whoPlaying].bet = 0;
         nextPlayer();
+        /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/    
+    }else{
+        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
 }
 
@@ -314,6 +338,8 @@ function comp(flag){
         dataBase[i].insurance = 0;
         dataBase[i].splitted = false;
         dataBase[i].lost = false;
+        dataBase[i].punt = false;
+        dataBase[i].standed = false;
         dataBase[i].bet = 0;
         dataBase[i].fish = 500;
     }
@@ -325,7 +351,7 @@ function comp(flag){
             }
         }
     }
-    console.log(ico)
+    console.log(ico);
 }
 
 function reset(){
@@ -338,6 +364,7 @@ function reset(){
     i = 0;
     curpi = 0;
     flag = true;
+    retro = "";
 }
 
 function cardAssign(playerID, card_id, card_val){
@@ -388,11 +415,11 @@ function nextPlayer(){
         fishValue(whoPlaying);
         return 0;
     }
-    if(whoPlaying>=num){
+
+    whoPlaying++;
+
+    if(whoPlaying >= num){
         whoPlaying = 0;
-    }
-    else{
-        whoPlaying++;
     }
     if(isAlive <= 0){
         endGame();
@@ -406,10 +433,58 @@ function nextPlayer(){
     fishValue(whoPlaying);
 }
 
+function bet(){
+    if(nowplaying == true){
+        if(dataBase[whoPlaying].punt != true){
+            dataBase[whoPlaying].punt = true;
+            var puntata = (dataBase[whoPlaying].fish + 50);
+            while(puntata > dataBase[whoPlaying].fish) {
+            puntata = prompt("Quando si desidera scommettere?");
+                if(puntata > dataBase[whoPlaying].fish){
+                    alert("Puntata più alta di quando si possiede" +
+                    "     Puntata --> " + puntata +
+                        "     Conto --> " + dataBase[whoPlaying].fish);
+                }
+            }
+            dataBase[whoPlaying].bet += puntata;
+            dataBase[whoPlaying].fish -= puntata;
+            alert("Puntata effettuata" +
+                "     Puntata --> " + puntata +
+                "     Conto --> " + dataBase[whoPlaying].fish);
+        }else{
+            alert("hai già puntato trmn");
+        }
+        }else{
+            alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+        }
+}
+
 function endGame(playerID){
     but.style.color = "fuchsia";
     but.innerHTML = "<p style='color: cyan'>WINNER:</p>";
     but.innerHTML += "<p>Player" + playerID + "</p>";
     but.innerHTML += "<p>" + dataBase[playerID].name + "</p>";
     reset();
+}
+
+/*fine del gioco, semplice refresh della pagina*/
+function ref(){
+    var conferma = window.confirm("sei sicuro di voler smettere di giocare?");
+    if(conferma){
+        window.location.reload();
+    }else{
+        window.alert("attento a ciò che premi onissassaoid");
+    }
+}
+
+/*continua il gioco ripulendo il tabellone*/
+function continua(){
+    if(dataBase[whoPlaying].standed == whoPlaying){
+        clearBox();
+    }
+    gioca();
+}
+
+function clearBox(){
+    var svbusiebfv=0;
 }
