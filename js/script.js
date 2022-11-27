@@ -266,16 +266,15 @@ function double_down(){
 /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game--FINITO*/
 function stand(){
     if(nowplaying == true){
-    /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
-    if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
-        alert("Non puoi fermarti perchè hai perso o ti sei già fermato");
-    }
-    else {
-        dataBase[whoPlaying].standed = true;
-        nextPlayer();
+        if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
+            alert("Non puoi fermarti perchè hai perso o ti sei già fermato");
+        }
+        else {
+            dataBase[whoPlaying].standed = true;
+            nextPlayer();
+        }
     }
 }
-
 function insurance(){
     if(nowplaying == true){
         dataBase[whoPlaying].insurance++;
