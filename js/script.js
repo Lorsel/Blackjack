@@ -275,7 +275,6 @@ function stand() {
         }
     }
 }
-
 function insurance(){
     if(nowplaying == true){
         dataBase[whoPlaying].insurance++;
