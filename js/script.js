@@ -14,7 +14,7 @@ let dataBase = [
     {}, /* 5 */
     {}, /* 6 */
     {}, /* 7 */
-    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, punt: false, bet: 0, fish: 772} /* 8 */
+    {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, double: false, punt: false, bet: 0, fish: 772} /* 8 */
 ];
 let start = true;
 let isAlive = null;
@@ -211,36 +211,42 @@ function gioca(){
     }
     i++;
 }
-/*funzione che per il giocatore corrente "chiede al curpi" la carta*/
-function hit(){
-    if(nowplaying == true){
-    var c=0, table=whoPlaying+1;
-    while (dataBase[whoPlaying].card[c] != null) {
-        c++;
-        table += 7;
-    }
-    if(dataBase[whoPlaying].bet != 0){
-        if(c < dataBase[whoPlaying].card.length) {
-            var l = card_gen();
-            retro.innerHTML += "<img class=\"cella_" + table + "\" src='ico/" + l[0] + "/" + l[1] + ".jpg'>";
-            let cardID = l[0] + "/" + l[1];
-            cardAssign(whoPlaying, cardID, l[1]);
+
+function hit() {
+    if (nowplaying == true) {
+        var c = 0, table = whoPlaying + 1;
+        while (dataBase[whoPlaying].card[c] != null) {
+            c++;
+            table += 7;
         }
-        else{
-            alert("ATTENZIONE Player" + (whoPlaying+1) + " hai raggiunto il numero massimo di carte per giocatore");
+        if (dataBase[whoPlaying].bet != 0) {
+            if(dataBase[whoPlaying].double == false) {
+                if (c < dataBase[whoPlaying].card.length) {
+                    var l = card_gen();
+                    retro.innerHTML += "<img class=\"cella_" + table + "\" src='ico/" + l[0] + "/" + l[1] + ".jpg'>";
+                    let cardID = l[0] + "/" + l[1];
+                    cardAssign(whoPlaying, cardID, l[1]);
+                }
+                else {
+                    alert("ATTENZIONE Player" + (whoPlaying + 1) + " hai raggiunto il numero massimo di carte per giocatore");
+                }
+            }
         }
-    }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " non hai ancora puntato");
-    }
-    if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
-       alert("Non puoi richiedere altre carte perchè ti sei fermato o ti sei arreso");
+        else {
+            alert("ATTENZIONE Player" + (whoPlaying + 1) + " non hai ancora puntato");
+        }
+        if (dataBase[whoPlaying].lost || dataBase[whoPlaying].standed) {
+            alert("Non puoi richiedere altre carte perchè ti sei fermato o ti sei arreso");
+        }
     }
 }
-}
+
 function double_down(){
     if(nowplaying == true){
     /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
         dataBase[whoPlaying].bet *=2;
+        hit();
+        dataBase[whoPlaying].double = true;
         /*da finire per lorsel perchè non ho idea di come far richiedere al giocatore una sola carta in più*/
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
@@ -278,7 +284,7 @@ function fold(){
         dataBase[whoPlaying].lost = true;
         dataBase[whoPlaying].bet = 0;
         isAlive--;
-        nextPlayer();    
+        nextPlayer();
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
@@ -300,7 +306,7 @@ function fishValue(playerID){
     //defPuntLimit(playerID);//?
 }
 
-// {name, card, card_value, card_sum, insurance, splitted, fish}
+// {name, card, card_value, card_sum, insurance, splitted, lost, standed, double, punt, bet, fish}
 function comp(flag){
     for(var i=0;i<8;i++){
         if(flag){
@@ -312,6 +318,7 @@ function comp(flag){
         dataBase[i].insurance = 0;
         dataBase[i].splitted = false;
         dataBase[i].lost = false;
+        dataBase[i].double = false;
         dataBase[i].punt = false;
         dataBase[i].standed = false;
         dataBase[i].bet = 0;
@@ -404,6 +411,7 @@ function nextPlayer(){
     }
     fishValue(whoPlaying);
 }
+
 /*funzione che richiede al giocatore quante fish vuoi puntare--FINITO*/
 function bet(){
     if(nowplaying == true){
