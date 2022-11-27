@@ -20,6 +20,7 @@ let start = true;
 let isAlive = null;
 let whoPlaying = 0;
 let firstAce = true;
+let fine = false;
 
 const def_heigth = 667;
 const def_width = 1366;
@@ -379,7 +380,7 @@ function cardValue(card){
     }
 
 }
-
+/*funzione che 'passa il testimone' al giocatore successivo--FINITO*/
 function nextPlayer(){
     if(start){
         start = false;
@@ -403,7 +404,7 @@ function nextPlayer(){
     }
     fishValue(whoPlaying);
 }
-/*funzione che richiede al giocatore quante fish vuoi puntare*/
+/*funzione che richiede al giocatore quante fish vuoi puntare--FINITO*/
 function bet(){
     if(nowplaying == true){
         if(dataBase[whoPlaying].punt != true){
@@ -438,7 +439,7 @@ function endGame(playerID){
     reset();
 }
 
-/*fine del gioco, semplice refresh della pagina*/
+/*fine del gioco, semplice refresh della pagina--FINITO*/
 function ref(){
     var conferma = window.confirm("sei sicuro di voler smettere di giocare?");
     if(conferma){
@@ -450,7 +451,8 @@ function ref(){
 
 /*continua il gioco ripulendo il tabellone*/
 function continua(){
-    if(isalive == 0){
+    if(fine == true){
+        fine = false;
         reset();
         gioca();
     }else{
