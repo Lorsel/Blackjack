@@ -151,11 +151,29 @@ function changeName(playerID){
 
 /* GAME */
 function card_gen(){
-    var g = Math.floor(Math.random() * 4);
-    var n = Math.floor(Math.random() * 12);
-    var check = g + "/" + n;
+    var go = true
+    console.log(ico[1].length);
+    while(go) {
+        var g = Math.floor(Math.random() * 4);
+        var n = Math.floor(Math.random() * 12);
+        var check = g + "/" + n;
+        var found = false;
+        for (var i = 0; i < 2; i++) {
+            for (var j = 0; i < ico[i].length; j++) {
+                if (ico[i][j] == check) {
+                    found = true;
+                    ico[i][j] = null;
+                }
+                console.log(ico[i][j]);
+            }
+        }
+        if(found==true){
+            console.log(found);
+            go = false;
+            return[g,n];
+        }
+    }
     //TODO fare il controllo delle carte disponibili ed eliminarle dall'array(ico) quando selezionate, se non ce ne sono disponibili ri-eseguire il random
-    return [g,n];
 }
 
 function gioca(){
@@ -194,6 +212,23 @@ function gioca(){
     i++;
 }
 
+function bet(){
+    var puntata = (dataBase[whoPlaying].fish + 50);
+    while(puntata > dataBase[whoPlaying].fish) {
+        puntata = prompt("Quando si desidera scommettere?");
+        if(puntata > dataBase[whoPlaying].fish){
+            alert("Puntata più alta di quando si possiede" +
+                "     Puntata --> " + puntata +
+                "     Conto --> " + dataBase[whoPlaying].fish);
+        }
+    }
+    dataBase[whoPlaying].bet += puntata;
+    dataBase[whoPlaying].fish -= puntata;
+    alert("Puntata effettuata" +
+        "     Puntata --> " + puntata +
+        "     Conto --> " + dataBase[whoPlaying].fish);
+}
+
 function hit(){
     if(nowplaying == true){
     var c=0, table=whoPlaying+1;
@@ -214,12 +249,11 @@ function hit(){
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " non hai ancora puntato");
     }
-    console.log(whoPlaying + "|" + c + "|" + dataBase[whoPlaying].card.length + "|" + table);
-    }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non è ancora partito");
+    if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
+       alert("Non puoi richiedere altre carte perchè ti sei fermato o ti sei arreso");
     }
 }
-
+}
 function double_down(){
     if(nowplaying == true){
     /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
@@ -232,10 +266,13 @@ function double_down(){
 /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game--FINITO*/
 function stand(){
     if(nowplaying == true){
-    dataBase[whoPlaying].standed = true;
-    nextPlayer();
-    }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
+    /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
+    if(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
+        alert("Non puoi fermarti perchè hai perso o ti sei già fermato");
+    }
+    else {
+        dataBase[whoPlaying].standed = true;
+        nextPlayer();
     }
 }
 
@@ -249,14 +286,17 @@ function insurance(){
 }
 /*il giocatore si arrende, lasciando il gioco e scartando le sue carte----FINITO*/
 function fold(){
-    if(nowplaying == true){
+    /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/
+    if(dataBase[whoPlaying].lost){
+        alert("Nono puoi arrenderti perchè hai gia perso");
+    }
+    else if(nowplaying == true){
         dataBase[whoPlaying].lost = true;
         dataBase[whoPlaying].bet = 0;
         nextPlayer();    
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
-    
 }
 
 function fishValue(playerID){
@@ -376,6 +416,9 @@ function nextPlayer(){
     while(dataBase[whoPlaying].lost == true || dataBase[whoPlaying].standed == true){
         whoPlaying++;
     }
+    while(dataBase[whoPlaying].standed){
+        whoPlaying++;
+    }
     fishValue(whoPlaying);
 }
 
@@ -425,7 +468,8 @@ function ref(){
 
 /*continua il gioco ripulendo il tabellone*/
 function continua(){
-    for(i=0;i<num;i++){
+    var morti = 0;
+    for(var i=0;i<num;i++){
         if(dataBase[i].lost == true || dataBase[i].standed == true){
             morti++;
         }
@@ -436,5 +480,4 @@ function continua(){
     }else{
         alert("ATTENZIONE player: non tutti i giocatori hanno finito!");
     }
-    
 }
