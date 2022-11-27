@@ -486,5 +486,5 @@ function continua(){
 }
 
 function clearBox(){
-    var svbusiebfv=0;
+    
 }
