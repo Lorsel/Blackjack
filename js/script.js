@@ -1,8 +1,4 @@
 // C = 0 | Q = 1 | F = 2 | P = 3
-//TODO controllo carte ico
-//TODO dare carte al mazziere
-//TODO confrontare il valore delle carte
-//TODO sistemare funzione reset pagina / tavolo
 const mat = [["C",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["Q",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["F",[1,2,3,4,5,6,7,8,9,10,11,12,13]],["P",[1,2,3,4,5,6,7,8,9,10,11,12,13]]]; //52
 let ico = [
     [],
@@ -17,7 +13,7 @@ let dataBase = [
     {}, /* 4 */
     {}, /* 5 */
     {}, /* 6 */
-    {}, /* 7 */
+    {}, /* 7 (curpi) */
     {name: "DEBUG", card: ["1/4","1/7",null,null], card_value: [5,8,null,null], card_sum: 13, insurance: 0, splitted: false, lost: false, standed: false, double: false, punt: false, bet: 0, fish: 772} /* 8 */
 ];
 let start = true;
@@ -113,6 +109,9 @@ function menu(page){
     else if(page.value == "inc"){
         nextPlayer();
     }
+    else if(page.value == "reset"){
+        reset(true);
+    }
     else {
         window.location = "./index/" + page.value + ".html";
     }
@@ -178,7 +177,6 @@ function card_gen(){
             return[g,n];
         }
     }
-    //TODO fare il controllo delle carte disponibili ed eliminarle dall'array(ico) quando selezionate, se non ce ne sono disponibili ri-eseguire il random
 }
 
 function gioca(){
@@ -206,10 +204,14 @@ function gioca(){
     else if(i>num && flag){
         flag = false;
         curpi++;
+
         var card = card_gen();
         retro.innerHTML += "<img class=\"cella_mazz_"+curpi+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
         let cardID = card[0] + "/" + card[1];
         cardAssign(7, cardID, card[1]);
+
+        retro.innerHTML += "<img class=\"cella_mazz_2\" id='back_card' src='ico/Card_original/retro_carte.png'>";
+
         nextPlayer();
         setTimeout(gioca, 1000);
     }
@@ -339,9 +341,11 @@ function comp(flag){
     console.log(ico);
 }
 
-function reset(){
+function reset(flag){
     alert("Reset Tavolo");
-    comp(false);
+    if(flag) {
+        comp(false);
+    }
     firstAce = true;
     isAlive = num;
     whoPlaying = 0;
@@ -349,7 +353,8 @@ function reset(){
     i = 0;
     curpi = 0;
     flag = true;
-    retro = "";
+    retro.innerHTML = "";
+    gioca();
 }
 
 function cardAssign(playerID, card_id, card_val){
@@ -440,6 +445,17 @@ function bet(){
         }
 }
 
+//TODO dare carte al mazziere
+function curpi_card(){
+    while(curpi<=4) {
+        curpi++;
+        let card = card_gen();
+        retro.innerHTML += "<img class=\"cella_mazz_" + curpi + "\" src='ico/" + card[0] + "/" + card[1] + ".jpg'>";
+        let cardID = card[0] + "/" + card[1];
+        cardAssign(7, cardID, card[1]);
+    }
+}
+
 function endGame(/*playerID*/){
     /*but.style.color = "fuchsia";
     but.innerHTML = "<p style='color: cyan'>WINNER:</p>";
@@ -447,20 +463,21 @@ function endGame(/*playerID*/){
     but.innerHTML += "<p>" + dataBase[playerID].name + "</p>";*/
     /*qui mettiamo le carte al curpi e poi le confrontiamo con quelle dei giocatori*/
     /*controllo carte + aggiunta/perdita fish*/
+    curpi_card();
     for(var i=0;i<n;i++){
         if(dataBase[i].lost == false){
-            if(dataBase[i].card_value == curpi){
+            if(dataBase[i].card_value == dataBase[7].card_value){
                 //caso carte uguali al curpi
                 dataBase[i].fish += dataBase[i].bet;
-            }else if(dataBase[i].card_value > curpi){
+            }else if(dataBase[i].card_value > dataBase[7].card_value){
                 //caso carte maggiori
                 dataBase[i].fish += (dataBase[i].bet*3/2);
             }
         }
         dataBase[i].bet = 0;
     }
-    reset();
-}
+    continua();
+}//TODO confrontare il valore delle carte
 
 /*fine del gioco, semplice refresh della pagina--FINITO*/
 function ref(){
@@ -474,10 +491,8 @@ function ref(){
 
 /*continua il gioco ripulendo il tabellone*/
 function continua(){
-    if(fine == true){
-        fine = false;
-        reset();
-        gioca();
+    if(isAlive == 0){
+        reset(false);
     }else{
         alert("ATTENZIONE player: non tutti i giocatori hanno finito!");
     }
