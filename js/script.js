@@ -263,6 +263,7 @@ function double_down(){
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
 }
+
 /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game--FINITO*/
 function stand() {
     if (nowplaying == true) {
@@ -285,6 +286,7 @@ function insurance(){
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
 }
+
 /*il giocatore si arrende, lasciando il gioco e scartando le sue carte----FINITO*/
 function fold(){
     /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/
