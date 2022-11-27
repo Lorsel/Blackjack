@@ -159,8 +159,8 @@ function card_gen(){
 }
 
 function gioca(){
-    nowplaying = true;
     if(i==0){
+        if(nowplaying == false){
         comp(true);
         var number=0;
         while(number<=0 || number>7){
@@ -169,6 +169,8 @@ function gioca(){
         puls.style.display="none";
         num = number;
         isAlive = number;
+        }
+        nowplaying = true;
         setTimeout(gioca, 1000);
     }
     else if(i<=num){
@@ -218,18 +220,6 @@ function hit(){
     }
 }
 
-function split(){
-    if(nowplaying == true){
-    /*divide le carte del giocatore con tre possibilità
-        -separa due carte e ne aggiunge una uguale alla seconda delle 2;
-        -conta le due carte iniziali del giocatore come una carta sola;
-        -aggiunge una carta a ciascuna altra carta separata;
-    */
-    }else{
-        alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
-    }
-}
-
 function double_down(){
     if(nowplaying == true){
     /*raddoppia la puntata in cambio di una sola carta ricevuta al turno successivo*/
@@ -239,10 +229,9 @@ function double_down(){
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
 }
-
+/*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game--FINITO*/
 function stand(){
     if(nowplaying == true){
-    /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
     dataBase[whoPlaying].standed = true;
     nextPlayer();
     }else{
@@ -258,13 +247,12 @@ function insurance(){
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
 }
-
+/*il giocatore si arrende, lasciando il gioco e scartando le sue carte----FINITO*/
 function fold(){
     if(nowplaying == true){
         dataBase[whoPlaying].lost = true;
         dataBase[whoPlaying].bet = 0;
-        nextPlayer();
-        /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/    
+        nextPlayer();    
     }else{
         alert("ATTENZIONE Player" + (whoPlaying+1) + " il gioco non e\' ancora partito");
     }
@@ -284,7 +272,7 @@ function fishValue(playerID){
     }
     debug.innerHTML = "<p style='color: cyan'>Turno di:</p>";
     debug.innerHTML += "<p style='color: fuchsia'> Player"+ (playerID+1) + ": " + dataBase[playerID].name + "</p>";
-    defPuntLimit(playerID);
+    defPuntLimit(playerID);//?
 }
 
 // {name, card, card_value, card_sum, insurance, splitted, fish}
@@ -385,7 +373,7 @@ function nextPlayer(){
     if(isAlive <= 0){
         endGame();
     }
-    while(dataBase[whoPlaying].lost){
+    while(dataBase[whoPlaying].lost == true || dataBase[whoPlaying].standed == true){
         whoPlaying++;
     }
     fishValue(whoPlaying);
@@ -437,12 +425,16 @@ function ref(){
 
 /*continua il gioco ripulendo il tabellone*/
 function continua(){
-    if(dataBase[whoPlaying].standed == whoPlaying){
-        clearBox();
+    for(i=0;i<num;i++){
+        if(dataBase[i].lost == true || dataBase[i].standed == true){
+            morti++;
+        }
     }
-    gioca();
-}
-
-function clearBox(){
-
+    if(morti == num){
+        reset();
+        gioca();
+    }else{
+        alert("ATTENZIONE player: non tutti i giocatori hanno finito!");
+    }
+    
 }
