@@ -407,10 +407,7 @@ function nextPlayer(){
     if(isAlive <= 0){
         endGame();
     }
-    while(dataBase[whoPlaying].lost == true || dataBase[whoPlaying].standed == true){
-        whoPlaying++;
-    }
-    while(dataBase[whoPlaying].standed){
+    while(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
         whoPlaying++;
     }
     fishValue(whoPlaying);
