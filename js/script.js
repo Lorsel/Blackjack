@@ -205,9 +205,8 @@ function gioca(){
         retro.innerHTML += "<img class=\"cella_mazz_"+curpi+"\" src='ico/"+card[0]+"/"+card[1]+".jpg'>";
         let cardID = card[0] + "/" + card[1];
         cardAssign(7, cardID, card[1]);
-        setTimeout(gioca, 1000);
-
         nextPlayer();
+        setTimeout(gioca, 1000);
     }
     i++;
 }
