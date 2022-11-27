@@ -439,11 +439,25 @@ function bet(){
         }
 }
 
-function endGame(playerID){
-    but.style.color = "fuchsia";
+function endGame(/*playerID*/){
+    /*but.style.color = "fuchsia";
     but.innerHTML = "<p style='color: cyan'>WINNER:</p>";
     but.innerHTML += "<p>Player" + playerID + "</p>";
-    but.innerHTML += "<p>" + dataBase[playerID].name + "</p>";
+    but.innerHTML += "<p>" + dataBase[playerID].name + "</p>";*/
+    /*qui mettiamo le carte al curpi e poi le confrontiamo con quelle dei giocatori*/
+    /*controllo carte + aggiunta/perdita fish*/
+    for(var i=0;i<n;i++){
+        if(dataBase[i].lost == false){
+            if(dataBase[i].card_value == curpi){
+                //caso carte uguali al curpi
+                dataBase[i].fish += dataBase[i].bet;
+            }else if(dataBase[i].card_value > curpi){
+                //caso carte maggiori
+                dataBase[i].fish += (dataBase[i].bet*3/2);
+            }
+        }
+        dataBase[i].bet = 0;
+    }
     reset();
 }
 
