@@ -210,24 +210,7 @@ function gioca(){
     }
     i++;
 }
-
-function bet(){
-    var puntata = (dataBase[whoPlaying].fish + 50);
-    while(puntata > dataBase[whoPlaying].fish) {
-        puntata = prompt("Quando si desidera scommettere?");
-        if(puntata > dataBase[whoPlaying].fish){
-            alert("Puntata più alta di quando si possiede" +
-                "     Puntata --> " + puntata +
-                "     Conto --> " + dataBase[whoPlaying].fish);
-        }
-    }
-    dataBase[whoPlaying].bet += puntata;
-    dataBase[whoPlaying].fish -= puntata;
-    alert("Puntata effettuata" +
-        "     Puntata --> " + puntata +
-        "     Conto --> " + dataBase[whoPlaying].fish);
-}
-
+/*funzione che per il giocatore corrente "chiede al curpi" la carta*/
 function hit(){
     if(nowplaying == true){
     var c=0, table=whoPlaying+1;
@@ -266,7 +249,6 @@ function double_down(){
 /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game--FINITO*/
 function stand() {
     if (nowplaying == true) {
-        /*il giocatore si ferma, bloccando il punteggio e le puntate, fino a fine game*/
         if (dataBase[whoPlaying].lost || dataBase[whoPlaying].standed) {
             alert("Non puoi fermarti perchè hai perso o ti sei già fermato");
         } else {
@@ -288,7 +270,6 @@ function insurance(){
 
 /*il giocatore si arrende, lasciando il gioco e scartando le sue carte----FINITO*/
 function fold(){
-    /*il giocatore si arrende, lasciando il gioco e scartando le sue carte*/
     if(dataBase[whoPlaying].lost){
         alert("Nono puoi arrenderti perchè hai gia perso");
     }
@@ -422,7 +403,7 @@ function nextPlayer(){
     }
     fishValue(whoPlaying);
 }
-
+/*funzione che richiede al giocatore quante fish vuoi puntare*/
 function bet(){
     if(nowplaying == true){
         if(dataBase[whoPlaying].punt != true){
