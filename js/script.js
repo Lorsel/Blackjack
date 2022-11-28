@@ -289,7 +289,7 @@ function stand() {
 function insurance(){
     if(nowplaying == true){
         if(dataBase[whoPlaying].bet != 0) {
-            dataBase[whoPlaying].insurance = dataBase[whoPlaying].bet / 2;
+            dataBase[whoPlaying].insurance = Math.floor(dataBase[whoPlaying].bet / 2);
         }
         else{
             alert("ATTENZIONE " + dataBase[whoPlaying].name + " non hai ancora puntato");
