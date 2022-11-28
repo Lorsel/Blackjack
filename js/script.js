@@ -21,6 +21,7 @@ let isAlive = null;
 let whoPlaying = 0;
 let firstAce = true;
 let fine = false;
+var fallout = null;
 
 const def_heigth = 667;
 const def_width = 1366;
@@ -42,6 +43,8 @@ var but = document.getElementById("but");
 var rand = document.getElementById("rand");
 var puls = document.getElementById("partita");
 var retro = document.getElementById("retro");
+var buttones = document.getElementsByClassName("actionPos");
+buttones[0].style.display = "none";
 
 /* UTILITY */
 function debPrint() {
@@ -196,9 +199,10 @@ function gioca(){
             number = prompt("inserisci il numero di giocatori");
         }
         puls.style.display="none";
-        num = number;
+        num = parseInt(number);
         }
         isAlive = num;
+        fallout = num;
         nowplaying = true;
         setTimeout(gioca, 1000);
     }else if(i<=num){
@@ -218,6 +222,7 @@ function gioca(){
 
         retro.innerHTML += "<img class=\"cella_mazz_2\" id='back_card' src='ico/Card_original/retro_carte.png'>";
 
+        buttones[0].style.display = "block";
         nextPlayer();
         setTimeout(gioca, 1000);
     }
@@ -350,16 +355,14 @@ function comp(flag){
         dataBase[i].bet = 0;
     }
     console.log(dataBase);
-    if(flag) {
-        for (var l = 0; l < 2; l++) {
-            for (var i = 0; i < 4; i++) {
-                for (var j = 0; j < 13; j++) {
-                    ico[l].push(i + "/" + j);
-                }
+    for (var l = 0; l < 2; l++) {
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < 13; j++) {
+                ico[l].push(i + "/" + j);
             }
         }
-        console.log(ico);
     }
+    console.log(ico);
 }
 
 function reset(){
@@ -372,6 +375,7 @@ function reset(){
     curpi = 0;
     flag = true;
     retro.innerHTML = "";
+    fallout = num;
     gioca();
 }
 
@@ -428,7 +432,18 @@ function nextPlayer(){
     if(whoPlaying >= num){
         whoPlaying = 0;
     }
-    if(isAlive <= 0){
+    for(var j=0;j<num;j++){
+        if(parseInt(dataBase[j].fish) <= 0){
+            dataBase[j].lost = true;
+        }
+        if(dataBase[j].lost == true){
+            fallout--;
+        }
+    }
+    if(fallout <= 0){
+        ref();
+    }
+    else if(isAlive <= 0){
         endGame();
     }
     while(dataBase[whoPlaying].lost || dataBase[whoPlaying].standed){
@@ -467,6 +482,7 @@ function bet(){
 
 function hand(){
     doc.innerHTML = "Hand: " + dataBase[whoPlaying].card_sum;
+    doc.innerHTML += "<br/>Fish: " + dataBase[whoPlaying].fish;
 }
 
 function curpi_card(){
@@ -523,7 +539,7 @@ function win(){
         }
     }
     if(dataBase[7].lost == false && flag>=num || zombie>=num){
-        winner = "Mazzero";
+        winner.push("Mazzero");
     }
     else {
         for (var i = 0; i < num; i++) {
