@@ -288,7 +288,12 @@ function stand() {
 
 function insurance(){
     if(nowplaying == true){
-        dataBase[whoPlaying].insurance++;
+        if(dataBase[whoPlaying].bet != 0) {
+            dataBase[whoPlaying].insurance = dataBase[whoPlaying].bet / 2;
+        }
+        else{
+            alert("ATTENZIONE " + dataBase[whoPlaying].name + " non hai ancora puntato");
+        }
     /*salva metà della puntata di un giocatore in caso di giocata perdente*/
     }else{
         alert("ATTENZIONE " + dataBase[whoPlaying].name + " il gioco non e\' ancora partito");
@@ -498,6 +503,9 @@ function endGame(/*playerID*/){
             }
             else if(dataBase[i].card_sum < dataBase[7].card_sum){
                 flaggo++;
+                if(dataBase[i].insurance > 0){
+                    dataBase[i].fish += dataBase[i].insurance;
+                }
             }
         }
         dataBase[i].bet = 0;
