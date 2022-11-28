@@ -4,7 +4,7 @@ Tanti porconi e Orco Dio
 Questa Repository è per solo uso scolastico.
 Siete pregati di non creare Pull Request, Merge e Fork
 
-Rispettate la Licenca inserita
+Rispettate la Licenza inserita
 
 -------------------------------------------------------------
 
