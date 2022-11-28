@@ -16,8 +16,11 @@ font{
 /*css carta random*/
 .img{
     max-height: 60px;
-    position: inherit;
+    position: fixed;
+    top: 5px;
+    left: 5px;
     display: block;
+    color: cyan;
 }
 /*css per sistemare lo sfondo del body*/
 body{

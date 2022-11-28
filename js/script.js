@@ -31,6 +31,7 @@ let num = 0;
 let i = 0;
 let curpi = 0;
 let flag = true;
+let flaggo = 0;
 
 var doc = document.getElementById("test");
 var debug = document.getElementById("debug");
@@ -240,6 +241,7 @@ function hit() {
                     retro.innerHTML += "<img class=\"cella_" + table + "\" src='ico/" + l[0] + "/" + l[1] + ".jpg'>";
                     let cardID = l[0] + "/" + l[1];
                     cardAssign(whoPlaying, cardID, l[1]);
+                    hand();
                 }
                 else {
                     alert("ATTENZIONE " + dataBase[whoPlaying].name + " hai raggiunto il numero massimo di carte per giocatore");
@@ -321,6 +323,7 @@ function fishValue(playerID){
     }
     debug.innerHTML = "<p style='color: cyan'>Turno di:</p>";
     debug.innerHTML += "<p style='color: fuchsia'> Player"+ (playerID+1) + ": " + dataBase[playerID].name + "</p>";
+    hand();
     //defPuntLimit(playerID);//?
 }
 
@@ -457,6 +460,10 @@ function bet(){
         }
 }
 
+function hand(){
+    doc.innerHTML = "Hand: " + dataBase[whoPlaying].card_sum;
+}
+
 function curpi_card(){
     while(curpi<4) {
         curpi++;
@@ -489,6 +496,9 @@ function endGame(/*playerID*/){
                 //caso carte maggiori
                 dataBase[i].fish += Math.floor(dataBase[i].bet*3/2);
             }
+            else if(dataBase[i].card_sum < dataBase[7].card_sum){
+                flaggo++;
+            }
         }
         dataBase[i].bet = 0;
     }
@@ -498,17 +508,25 @@ function endGame(/*playerID*/){
 
 function win(){
     var winner = [];
-    if(dataBase[7].lost) {
+    var zombie = 0;
+    for(var i=0;i<num;i++){
+        if(dataBase[i].lost == true){
+            zombie++;
+        }
+    }
+    if(dataBase[7].lost == false && flag>=num || zombie>=num){
+        winner = "Mazzero";
+    }
+    else {
         for (var i = 0; i < num; i++) {
             if (dataBase[i].lost == false) {
-                winner.push(dataBase[i].name);
+                if(dataBase[i].card_sum >= dataBase[7].card_sum || dataBase[7].lost == true) {
+                    winner.push(dataBase[i].name);
+                }
             }
         }
     }
-    else{
-        winner[0] = "Mazzero";
-    }
-
+    flaggo = 0;
     alert("I vincitori della mano sono: " + winner);
 }
 
