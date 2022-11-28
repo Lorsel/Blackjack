@@ -14,3 +14,5 @@ Please, do not create Pull Request and Merges
 Please respect the Licence.
 
 ~Lorsel
+>Copyright 2022 Lorsel  
+>https://github.com/Lorsel/Blackjack
