@@ -22,6 +22,7 @@ let whoPlaying = 0;
 let firstAce = true;
 let fine = false;
 var fallout = null;
+let fullscreen = false;
 
 const def_heigth = 667;
 const def_width = 1366;
@@ -44,6 +45,7 @@ var rand = document.getElementById("rand");
 var puls = document.getElementById("partita");
 var retro = document.getElementById("retro");
 var buttones = document.getElementsByClassName("actionPos");
+var page = document.documentElement;
 buttones[0].style.display = "none";
 
 /* UTILITY */
@@ -191,6 +193,11 @@ function card_gen(){
 }
 
 function gioca(){
+    if(fullscreen == false){
+        if(page.requestFullscreen){
+            page.requestFullscreen();
+        }
+    }
     if(i==0){
         if(nowplaying == false){
         comp(true);
@@ -558,6 +565,11 @@ function win(){
 function ref(){
     var conferma = window.confirm("sei sicuro di voler smettere di giocare?");
     if(conferma){
+        if(fullscreen == true){
+            if(document.exitFullscreen){
+                document.exitFullscreen();
+            }
+        }
         window.location.reload();
     }else{
         window.alert("attento a ciò che premi onissassaoid");
