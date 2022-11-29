@@ -202,7 +202,6 @@ function gioca(){
         num = parseInt(number);
         }
         isAlive = num;
-        fallout = num+1;
         nowplaying = true;
         setTimeout(gioca, 1000);
     }else if(i<=num){
@@ -375,7 +374,6 @@ function reset(){
     curpi = 0;
     flag = true;
     retro.innerHTML = "";
-    fallout = num;
     gioca();
 }
 
@@ -423,6 +421,7 @@ function cardValue(card){
 function nextPlayer(){
     if(start){
         start = false;
+        fallout = num+1;
         fishValue(whoPlaying);
         return 0;
     }
