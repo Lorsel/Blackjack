@@ -202,7 +202,7 @@ function gioca(){
         num = parseInt(number);
         }
         isAlive = num;
-        fallout = num;
+        fallout = num+1;
         nowplaying = true;
         setTimeout(gioca, 1000);
     }else if(i<=num){
