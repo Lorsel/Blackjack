@@ -45,8 +45,9 @@ var rand = document.getElementById("rand");
 var puls = document.getElementById("partita");
 var retro = document.getElementById("retro");
 var buttones = document.getElementsByClassName("actionPos");
-var page = document.documentElement;
+var termina = document.getElementById("fine");
 buttones[0].style.display = "none";
+termina.style.display = "none";
 
 /* UTILITY */
 function debPrint() {
@@ -193,11 +194,6 @@ function card_gen(){
 }
 
 function gioca(){
-    if(fullscreen == false){
-        if(page.requestFullscreen){
-            page.requestFullscreen();
-        }
-    }
     if(i==0){
         if(nowplaying == false){
         comp(true);
@@ -230,6 +226,7 @@ function gioca(){
         retro.innerHTML += "<img class=\"cella_mazz_2\" id='back_card' src='ico/Card_original/retro_carte.png'>";
 
         buttones[0].style.display = "block";
+        termina.style.display = "block";
         nextPlayer();
         setTimeout(gioca, 1000);
     }
@@ -448,7 +445,7 @@ function nextPlayer(){
         }
     }
     if(fallout <= 0){
-        ref();
+        ref("Gli utenti hanno finito le fish a disposizione... Uscire dal gioco?");
     }
     else if(isAlive <= 0){
         endGame();
@@ -562,14 +559,9 @@ function win(){
 }
 
 /*fine del gioco, semplice refresh della pagina--FINITO*/
-function ref(){
-    var conferma = window.confirm("sei sicuro di voler smettere di giocare?");
+function ref(str){
+    var conferma = window.confirm(str);
     if(conferma){
-        if(fullscreen == true){
-            if(document.exitFullscreen){
-                document.exitFullscreen();
-            }
-        }
         window.location.reload();
     }else{
         window.alert("attento a ciò che premi onissassaoid");
