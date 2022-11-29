@@ -22,7 +22,6 @@ let whoPlaying = 0;
 let firstAce = true;
 let fine = false;
 var fallout = null;
-let fullscreen = false;
 
 const def_heigth = 667;
 const def_width = 1366;
@@ -45,9 +44,7 @@ var rand = document.getElementById("rand");
 var puls = document.getElementById("partita");
 var retro = document.getElementById("retro");
 var buttones = document.getElementsByClassName("actionPos");
-var termina = document.getElementById("fine");
 buttones[0].style.display = "none";
-termina.style.display = "none";
 
 /* UTILITY */
 function debPrint() {
@@ -226,7 +223,6 @@ function gioca(){
         retro.innerHTML += "<img class=\"cella_mazz_2\" id='back_card' src='ico/Card_original/retro_carte.png'>";
 
         buttones[0].style.display = "block";
-        termina.style.display = "block";
         nextPlayer();
         setTimeout(gioca, 1000);
     }
@@ -445,7 +441,7 @@ function nextPlayer(){
         }
     }
     if(fallout <= 0){
-        ref("Gli utenti hanno finito le fish a disposizione... Uscire dal gioco?");
+        ref();
     }
     else if(isAlive <= 0){
         endGame();
@@ -559,8 +555,8 @@ function win(){
 }
 
 /*fine del gioco, semplice refresh della pagina--FINITO*/
-function ref(str){
-    var conferma = window.confirm(str);
+function ref(){
+    var conferma = window.confirm("sei sicuro di voler smettere di giocare?");
     if(conferma){
         window.location.reload();
     }else{
